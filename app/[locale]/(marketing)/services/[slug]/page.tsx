@@ -27,7 +27,7 @@ import {
   GraduationCap
 } from "lucide-react";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 const SERVICES_DETAIL = {
   // Services

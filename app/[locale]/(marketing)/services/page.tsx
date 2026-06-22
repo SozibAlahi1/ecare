@@ -8,7 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Code, Cloud, Layers, Cpu, Globe, CheckCircle, Zap } from "lucide-react";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 const SERVICES_DATA = [
   {

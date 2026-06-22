@@ -8,7 +8,7 @@ import { Container } from "@/components/ui/container";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Wifi, Wallet, Award, ArrowRight } from "lucide-react";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 interface CareersPageProps {
   params: Promise<{ locale: string }>;
