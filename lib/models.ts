@@ -149,27 +149,11 @@ const CategorySchema = new Schema(
   { timestamps: true }
 );
 
-// Avoid Mongoose caching outdated schemas during Next.js Hot Module Replacement (HMR)
-if (mongoose.models.Blog) {
-  delete (mongoose.models as any).Blog;
-}
-if (mongoose.models.Team) {
-  delete (mongoose.models as any).Team;
-}
-if (mongoose.models.Testimonial) {
-  delete (mongoose.models as any).Testimonial;
-}
-if (mongoose.models.Portfolio) {
-  delete (mongoose.models as any).Portfolio;
-}
-if (mongoose.models.Category) {
-  delete (mongoose.models as any).Category;
-}
-export const Blog = mongoose.model("Blog", BlogSchema);
-export const Team = mongoose.model("Team", TeamSchema);
-export const Testimonial = mongoose.model("Testimonial", TestimonialSchema);
-export const Portfolio = mongoose.model("Portfolio", PortfolioSchema);
-export const Category = mongoose.model("Category", CategorySchema);
+export const Blog = mongoose.models.Blog || mongoose.model("Blog", BlogSchema);
+export const Team = mongoose.models.Team || mongoose.model("Team", TeamSchema);
+export const Testimonial = mongoose.models.Testimonial || mongoose.model("Testimonial", TestimonialSchema);
+export const Portfolio = mongoose.models.Portfolio || mongoose.model("Portfolio", PortfolioSchema);
+export const Category = mongoose.models.Category || mongoose.model("Category", CategorySchema);
 export const Contact = mongoose.models.Contact || mongoose.model("Contact", ContactSchema);
 export const Page = mongoose.models.Page || mongoose.model("Page", PageSchema);
 export const Admin = mongoose.models.Admin || mongoose.model("Admin", AdminSchema);
