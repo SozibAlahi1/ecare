@@ -34,11 +34,7 @@ export default async function AdminDashboardPage() {
         </p>
       </div>
 
-      {/* Database Connection Status banner */}
-      <div className={`p-4 rounded-2xl border flex items-center gap-3 ${dbStatus === "Connected" ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-400" : "bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/40 text-red-800 dark:text-red-400"}`}>
-        <CheckCircle2 className="w-5 h-5" />
-        <span className="text-sm font-semibold">Database Status: {dbStatus}</span>
-      </div>
+
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
