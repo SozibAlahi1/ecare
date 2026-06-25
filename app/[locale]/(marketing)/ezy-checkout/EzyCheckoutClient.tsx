@@ -240,21 +240,21 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               </h2>
             </div>
  
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {featuresList.map((feature: any, i: number) => (
                 <div
                   key={i}
-                  className="relative overflow-hidden bg-slate-50 dark:bg-slate-950/40 backdrop-blur-md text-slate-800 dark:text-white rounded-2xl p-8 min-h-[220px] flex flex-col justify-center text-left border border-slate-200/60 dark:border-slate-800/40 transition-all hover:-translate-y-1.5 hover:shadow-lg duration-300 group"
+                  className="relative overflow-hidden bg-white dark:bg-slate-900/50 text-slate-800 dark:text-white rounded-3xl p-8 min-h-[220px] flex flex-col justify-start text-left border border-slate-100 dark:border-slate-800/40 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(226,19,110,0.04)] hover:border-primary/20 -translate-y-0 hover:-translate-y-1.5 transition-all duration-350 ease-out group"
                 >
-                  {/* Watermark Icon in the bottom corner with reduced opacity */}
-                  <div className="absolute right-2 bottom-2 w-32 h-32 text-primary opacity-[0.05] group-hover:opacity-[0.08] group-hover:scale-105 transition-all duration-300 pointer-events-none z-0">
-                    <feature.icon className="w-full h-full stroke-[1.2]" />
+                  {/* Premium Styled Icon Box at the top left */}
+                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6 border border-primary/10 shadow-[inset_0_2px_4px_rgba(226,19,110,0.06)] group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                    <feature.icon className="w-5.5 h-5.5 stroke-[1.5]" />
                   </div>
 
-                  <h3 className="font-extrabold text-base sm:text-lg text-slate-800 dark:text-white mb-3 pr-8 relative z-10">
+                  <h3 className="font-black text-lg text-slate-800 dark:text-white mb-3 tracking-tight transition-colors group-hover:text-primary">
                     {feature.title}
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium relative z-10">
+                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                     {feature.desc}
                   </p>
                 </div>
