@@ -142,6 +142,13 @@ export default function MobileMenu({ items }: MobileMenuProps) {
       Icon: GraduationCap,
       isNew: true,
     },
+    {
+      titleKey: "ezy_checkout_title",
+      descKey: "ezy_checkout_desc",
+      href: "/ezy-checkout",
+      iconBg: "",
+      iconUrl: "/ezy-checkout-logo.png",
+    },
   ];
 
   const menuContent = (
@@ -198,8 +205,15 @@ export default function MobileMenu({ items }: MobileMenuProps) {
                         )}
                         onClick={() => setIsOpen(false)}
                       >
-                        <div className={`h-10 w-10 rounded-full bg-gradient-to-br ${prod.iconBg} flex items-center justify-center text-white shadow-sm shrink-0`}>
-                          <IconComp className="w-5 h-5" />
+                        <div className={cn(
+                          "h-10 w-10 rounded-full flex items-center justify-center shadow-sm shrink-0 overflow-hidden",
+                          prod.iconUrl ? "bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800" : `bg-gradient-to-br ${prod.iconBg} text-white`
+                        )}>
+                          {prod.iconUrl ? (
+                            <img src={prod.iconUrl} alt="" className="w-6 h-6 object-contain" />
+                          ) : (
+                            IconComp && <IconComp className="w-5 h-5" />
+                          )}
                         </div>
                         <div className="space-y-1">
                           <h4 className="text-sm font-semibold text-foreground flex items-center gap-1.5 leading-none">

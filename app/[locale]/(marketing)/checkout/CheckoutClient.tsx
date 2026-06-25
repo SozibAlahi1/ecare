@@ -182,7 +182,7 @@ export default function CheckoutClient() {
               </div>
               <div className="flex justify-between gap-8 text-xs font-semibold mt-2 border-t border-border/50 pt-2">
                 <span className="text-slate-500">{t("total")}:</span>
-                <span className="text-[#e2136e] font-extrabold">${total.toFixed(2)}</span>
+                <span className="text-[#e2136e] font-extrabold">৳{(total * 120).toFixed(0)}</span>
               </div>
             </div>
 
@@ -324,7 +324,7 @@ export default function CheckoutClient() {
                           </p>
                           <p className="text-[11px] text-muted-foreground">Qty: {item.quantity}</p>
                         </div>
-                        <span className="font-bold text-slate-800 dark:text-white shrink-0">${(itemPrice * item.quantity).toFixed(2)}</span>
+                        <span className="font-bold text-slate-800 dark:text-white shrink-0">৳{(itemPrice * item.quantity * 120).toFixed(0)}</span>
                       </div>
                     );
                   })}
@@ -334,15 +334,15 @@ export default function CheckoutClient() {
                 <div className="border-t border-border/40 pt-4 space-y-2.5 text-sm font-medium">
                   <div className="flex justify-between text-slate-500">
                     <span>{tCart("subtotal")}</span>
-                    <span className="text-slate-800 dark:text-slate-200">${subtotal.toFixed(2)}</span>
+                    <span className="text-slate-800 dark:text-slate-200">৳{(subtotal * 120).toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-slate-500">
                     <span>{t("tax")}</span>
-                    <span className="text-slate-800 dark:text-slate-200">${tax.toFixed(2)}</span>
+                    <span className="text-slate-800 dark:text-slate-200">৳{(tax * 120).toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-base font-extrabold border-t border-border/40 pt-3">
                     <span className="text-slate-800 dark:text-white">{t("total")}</span>
-                    <span className="text-[#e2136e]">${total.toFixed(2)}</span>
+                    <span className="text-[#e2136e]">৳{(total * 120).toFixed(0)}</span>
                   </div>
                 </div>
 
@@ -386,8 +386,7 @@ export default function CheckoutClient() {
             
             {/* Merchant / Payment Summary Banner */}
             <div className="bg-[#b10e5b] py-3.5 px-6 flex justify-between text-xs font-bold border-t border-white/10">
-              <span className="opacity-90">Merchant: Ecare Agency</span>
-              <span className="opacity-90">Amount: ৳{(total * 120).toFixed(0)} (${total.toFixed(2)})</span>
+              <span className="opacity-90">Amount: ৳{(total * 120).toFixed(0)}</span>
             </div>
 
             {/* Modal Content */}
