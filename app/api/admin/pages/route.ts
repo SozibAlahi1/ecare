@@ -144,7 +144,7 @@ export async function GET(request: NextRequest) {
             // Product Overview
             aboutBadge: "Product Overview",
             aboutTitle: "Beautiful PopUp Form & Settings Dashboard",
-            aboutImage: "/ezy-checkout-preview.png",
+            aboutImage: "https://www.youtube.com/watch?v=s8m6oHByjjI",
             
             // Pricing Details
             pricingTitle: "Flexible License Plans",
@@ -199,7 +199,7 @@ export async function GET(request: NextRequest) {
             // Product Overview
             aboutBadge: "প্রোডাক্ট ওভারভিউ",
             aboutTitle: "আকর্ষণীয় পপআপ ফর্ম এবং সেটিংস ড্যাশবোর্ড",
-            aboutImage: "/ezy-checkout-preview.png",
+            aboutImage: "https://www.youtube.com/watch?v=s8m6oHByjjI",
             
             // Pricing Details
             pricingTitle: "সহজ ও সাশ্রয়ী লাইসেন্স প্ল্যান",

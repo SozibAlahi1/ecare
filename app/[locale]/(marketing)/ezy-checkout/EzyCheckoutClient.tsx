@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container } from "@/components/ui/container";
@@ -23,6 +23,36 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [itemsPerView, setItemsPerView] = useState(3);
+
+  // States and list for YouTube Shorts Slider
+  const [playingShortIdx, setPlayingShortIdx] = useState<number | null>(null);
+  const [activeShortIdx, setActiveShortIdx] = useState(0);
+  const shortsScrollRef = useRef<HTMLDivElement>(null);
+
+  const shortsList = [
+    { id: "s8m6oHByjjI", embedUrl: "https://www.youtube.com/embed/s8m6oHByjjI", thumbnail: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&q=80&w=400" },
+    { id: "8s_3J69QnF4", embedUrl: "https://www.youtube.com/embed/8s_3J69QnF4", thumbnail: "https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&q=80&w=400" },
+    { id: "dQw4w9WgXcQ", embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", thumbnail: "https://images.unsplash.com/photo-1596272871287-187a5b1d37b8?auto=format&fit=crop&q=80&w=400" },
+    { id: "s8m6oHByjjI", embedUrl: "https://www.youtube.com/embed/s8m6oHByjjI", thumbnail: "https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&q=80&w=400" }
+  ];
+
+  const handleShortsScroll = () => {
+    if (shortsScrollRef.current) {
+      const { scrollLeft } = shortsScrollRef.current;
+      const index = Math.round(scrollLeft / 296);
+      setActiveShortIdx(index);
+    }
+  };
+
+  const scrollToShortPage = (pageIdx: number) => {
+    if (shortsScrollRef.current) {
+      shortsScrollRef.current.scrollTo({
+        left: pageIdx * 2 * 296,
+        behavior: "smooth"
+      });
+      setActiveShortIdx(pageIdx * 2);
+    }
+  };
 
   // Animation variants
   const fadeInUp = {
@@ -261,7 +291,8 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
             >
               <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl bg-slate-900">
                 {(() => {
-                  const mediaUrl = initialData?.aboutImage || "https://assets.mixkit.co/videos/preview/mixkit-dashboard-on-a-computer-screen-40742-large.mp4";
+                  const rawUrl = initialData?.aboutImage;
+                  const mediaUrl = (!rawUrl || rawUrl === "/ezy-checkout-preview.png") ? "https://www.youtube.com/watch?v=s8m6oHByjjI" : rawUrl;
                   const isVideo = mediaUrl.endsWith(".mp4") || mediaUrl.endsWith(".webm") || mediaUrl.endsWith(".ogg") || mediaUrl.includes("youtube.com") || mediaUrl.includes("youtu.be") || mediaUrl.includes("vimeo.com") || mediaUrl.includes("assets.mixkit.co");
 
                   if (isVideo) {
@@ -595,93 +626,47 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               </div>
             </div>
 
-            {/* Right Side: Scrollable Testimonial Cards List (Col span 7) */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              {/* Card 1 */}
-              <div className="bg-white dark:bg-[#070b15] border border-slate-100 dark:border-slate-800/80 rounded-3xl p-8 shadow-sm space-y-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-slate-100 dark:border-slate-800">
-                      <Image
-                        src="/static/images/team/sojib.jpg"
-                        alt={t("testName1")}
-                        fill
-                        className="object-cover"
+            {/* Right Side: Scrollable/Playable YouTube Shorts Slider (Col span 7) */}
+            <div className="lg:col-span-7 space-y-6 overflow-hidden">
+              {/* Slider viewport */}
+              <div 
+                ref={shortsScrollRef}
+                onScroll={handleShortsScroll}
+                className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              >
+                {shortsList.map((short, idx) => (
+                  <div 
+                    key={idx} 
+                    className="flex-shrink-0 w-[240px] sm:w-[260px] snap-start relative aspect-[9/16] rounded-[24px] overflow-hidden bg-black shadow-md border border-slate-100/50 dark:border-slate-800/50 group cursor-pointer"
+                    onClick={() => setPlayingShortIdx(playingShortIdx === idx ? null : idx)}
+                  >
+                    {playingShortIdx === idx ? (
+                      <iframe
+                        src={`${short.embedUrl}?autoplay=1&controls=0&mute=1&loop=1&playlist=${short.id}`}
+                        title={`YouTube Shorts Showcase ${idx + 1}`}
+                        className="w-full h-full border-none"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                       />
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-lg text-slate-800 dark:text-white leading-tight">{t("testName1")}</h4>
-                      <p className="text-xs text-[#64748b] dark:text-slate-400 font-medium mt-0.5">{t("testTitle1")}</p>
-                    </div>
+                    ) : (
+                      <>
+                        <Image
+                          src={short.thumbnail}
+                          alt={`YouTube Shorts Thumbnail ${idx + 1}`}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        {/* Semi-transparent play button overlay (exactly like screenshot) */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-black/15 group-hover:bg-black/30 transition-colors duration-300">
+                          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <Play className="w-5 h-5 text-white fill-white ml-0.5" />
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-500 stroke-amber-500" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm text-[#475569] dark:text-slate-400 leading-relaxed font-medium">
-                  {t("testText1")}
-                </p>
+                ))}
               </div>
-
-              {/* Card 2 */}
-              <div className="bg-white dark:bg-[#070b15] border border-slate-100 dark:border-slate-800/80 rounded-3xl p-8 shadow-sm space-y-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-slate-100 dark:border-slate-800">
-                      <Image
-                        src="/static/images/team/josim.jpg"
-                        alt={t("testName2")}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-lg text-slate-800 dark:text-white leading-tight">{t("testName2")}</h4>
-                      <p className="text-xs text-[#64748b] dark:text-slate-400 font-medium mt-0.5">{t("testTitle2")}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-500 stroke-amber-500" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm text-[#475569] dark:text-slate-400 leading-relaxed font-medium">
-                  {t("testText2")}
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-white dark:bg-[#070b15] border border-slate-100 dark:border-slate-800/80 rounded-3xl p-8 shadow-sm space-y-6">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border border-slate-100 dark:border-slate-800">
-                      <Image
-                        src="/static/images/team/maruf.jpg"
-                        alt={t("testName3")}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-lg text-slate-800 dark:text-white leading-tight">{t("testName3")}</h4>
-                      <p className="text-xs text-[#64748b] dark:text-slate-400 font-medium mt-0.5">{t("testTitle3")}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-amber-500 stroke-amber-500" />
-                    ))}
-                  </div>
-                </div>
-                <p className="text-sm text-[#475569] dark:text-slate-400 leading-relaxed font-medium">
-                  {t("testText3")}
-                </p>
-              </div>
-
             </div>
 
           </div>
