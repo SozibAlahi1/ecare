@@ -99,6 +99,9 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
         const targetScroll = targetChild.offsetLeft - container.offsetLeft;
 
         // Custom smooth scroll animation using requestAnimationFrame
+        // Temporarily disable scroll snap during animation to prevent browser snap conflicts
+        container.style.scrollSnapType = 'none';
+
         const start = container.scrollLeft;
         const change = targetScroll - start;
         const duration = 600; // 600ms transition
@@ -117,6 +120,9 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
 
           if (progress < 1) {
             requestAnimationFrame(animate);
+          } else {
+            // Restore scroll snap after animation completes
+            container.style.scrollSnapType = 'x mandatory';
           }
         };
         requestAnimationFrame(animate);
