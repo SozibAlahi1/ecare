@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"velite dev\" \"next dev\"",
+    "dev": "concurrently \"velite dev\" \"next dev --no-turbo\"",
     "build": "velite build && next build",
     "start": "next start",
     "lint": "eslint",
