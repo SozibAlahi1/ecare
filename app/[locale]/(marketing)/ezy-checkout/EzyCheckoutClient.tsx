@@ -94,24 +94,8 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
           }
         });
 
-        // Determine next index using ping-pong traversal
-        let targetIndex = currentIndex;
-        if (scrollDirectionRef.current === "forward") {
-          if (currentIndex < children.length - 1) {
-            targetIndex = currentIndex + 1;
-          } else {
-            scrollDirectionRef.current = "backward";
-            targetIndex = currentIndex - 1;
-          }
-        } else {
-          if (currentIndex > 0) {
-            targetIndex = currentIndex - 1;
-          } else {
-            scrollDirectionRef.current = "forward";
-            targetIndex = currentIndex + 1;
-          }
-        }
-
+        // Go to the next item, wrap around to first if at the end
+        const targetIndex = (currentIndex + 1) % children.length;
         const targetChild = children[targetIndex];
         const targetScroll = targetChild.offsetLeft - container.offsetLeft;
 
@@ -121,7 +105,10 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
 
         const start = container.scrollLeft;
         const change = targetScroll - start;
-        const duration = 600; // 600ms transition
+        
+        // Dynamic duration based on distance to keep the velocity smooth and consistent
+        const distance = Math.abs(change);
+        const duration = Math.min(350 + (distance / 296) * 150, 1000); 
         let startTime: number | null = null;
 
         const animate = (timestamp: number) => {
