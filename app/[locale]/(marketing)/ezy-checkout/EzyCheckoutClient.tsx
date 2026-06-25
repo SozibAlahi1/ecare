@@ -44,6 +44,7 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
   const [unmutedShortIdx, setUnmutedShortIdx] = useState<number | null>(null);
   const [activeShortIdx, setActiveShortIdx] = useState(0);
   const shortsScrollRef = useRef<HTMLDivElement>(null);
+  const scrollDirectionRef = useRef<"forward" | "backward">("forward");
 
   const shortsList = [
     { id: "tQVVZgIYiSo", embedUrl: "https://www.youtube.com/embed/tQVVZgIYiSo", thumbnail: "https://img.youtube.com/vi/tQVVZgIYiSo/hqdefault.jpg" },
@@ -93,8 +94,24 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
           }
         });
 
-        // Go to the next item, wrap around to first if at the end
-        const targetIndex = (currentIndex + 1) % children.length;
+        // Determine next index using ping-pong traversal
+        let targetIndex = currentIndex;
+        if (scrollDirectionRef.current === "forward") {
+          if (currentIndex < children.length - 1) {
+            targetIndex = currentIndex + 1;
+          } else {
+            scrollDirectionRef.current = "backward";
+            targetIndex = currentIndex - 1;
+          }
+        } else {
+          if (currentIndex > 0) {
+            targetIndex = currentIndex - 1;
+          } else {
+            scrollDirectionRef.current = "forward";
+            targetIndex = currentIndex + 1;
+          }
+        }
+
         const targetChild = children[targetIndex];
         const targetScroll = targetChild.offsetLeft - container.offsetLeft;
 
