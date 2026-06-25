@@ -1088,7 +1088,7 @@ export default function AdminPagesPage() {
                           <Input value={ezyCheckoutEn.aboutTitle} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, aboutTitle: e.target.value })} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-slate-500">Preview Image URL</label>
+                          <label className="text-xs font-semibold text-slate-500">Preview Video/Image URL</label>
                           <div className="flex gap-2">
                             <Input value={ezyCheckoutEn.aboutImage} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, aboutImage: e.target.value })} className="flex-1" />
                             <ImageUploader value={ezyCheckoutEn.aboutImage} onChange={(val) => setEzyCheckoutEn({ ...ezyCheckoutEn, aboutImage: val })} />
@@ -1109,7 +1109,7 @@ export default function AdminPagesPage() {
                           <Input value={ezyCheckoutBn.aboutTitle} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, aboutTitle: e.target.value })} />
                         </div>
                         <div className="space-y-1">
-                          <label className="text-xs font-semibold text-slate-500">Preview Image URL</label>
+                          <label className="text-xs font-semibold text-slate-500">Preview Video/Image URL</label>
                           <div className="flex gap-2">
                             <Input value={ezyCheckoutBn.aboutImage} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, aboutImage: e.target.value })} className="flex-1" />
                             <ImageUploader value={ezyCheckoutBn.aboutImage} onChange={(val) => setEzyCheckoutBn({ ...ezyCheckoutBn, aboutImage: val })} />

@@ -250,7 +250,7 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
             </h2>
           </div>
 
-          {/* Large Centered Image Showcase */}
+          {/* Large Centered Image/Video Showcase */}
           <div className="flex justify-center items-center">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -259,15 +259,53 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               transition={{ duration: 0.6 }}
               className="w-full max-w-5xl rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800/80 bg-white dark:bg-[#0c101b] p-1.5 shadow-sm"
             >
-              <div className="relative w-full aspect-[16/10]">
-                <Image
-                  src={initialData?.aboutImage || "/ezy-checkout-preview.png"}
-                  alt="Ezy Checkout Admin Dashboard Screenshot"
-                  fill
-                  sizes="(max-width: 1200px) 100vw, 1024px"
-                  className="object-contain"
-                  priority
-                />
+              <div className="relative w-full aspect-[16/10] overflow-hidden rounded-xl bg-slate-900">
+                {(() => {
+                  const mediaUrl = initialData?.aboutImage || "https://assets.mixkit.co/videos/preview/mixkit-dashboard-on-a-computer-screen-40742-large.mp4";
+                  const isVideo = mediaUrl.endsWith(".mp4") || mediaUrl.endsWith(".webm") || mediaUrl.endsWith(".ogg") || mediaUrl.includes("youtube.com") || mediaUrl.includes("youtu.be") || mediaUrl.includes("vimeo.com") || mediaUrl.includes("assets.mixkit.co");
+
+                  if (isVideo) {
+                    if (mediaUrl.includes("youtube.com") || mediaUrl.includes("youtu.be") || mediaUrl.includes("vimeo.com")) {
+                      let embedUrl = mediaUrl;
+                      if (mediaUrl.includes("youtube.com/watch?v=")) {
+                        embedUrl = mediaUrl.replace("youtube.com/watch?v=", "youtube.com/embed/");
+                      } else if (mediaUrl.includes("youtu.be/")) {
+                        embedUrl = mediaUrl.replace("youtu.be/", "youtube.com/embed/");
+                      }
+                      return (
+                        <iframe
+                          src={embedUrl}
+                          title="Ezy Checkout Showcase Video"
+                          className="w-full h-full border-none"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      );
+                    }
+                    return (
+                      <video
+                        src={mediaUrl}
+                        controls
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                      />
+                    );
+                  }
+
+                  return (
+                    <Image
+                      src={mediaUrl}
+                      alt="Ezy Checkout Admin Dashboard Screenshot"
+                      fill
+                      sizes="(max-width: 1200px) 100vw, 1024px"
+                      className="object-contain"
+                      priority
+                    />
+                  );
+                })()}
               </div>
             </motion.div>
           </div>
