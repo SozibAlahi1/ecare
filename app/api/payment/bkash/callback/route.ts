@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Step 1: Grant Token to authorize Execute Payment
-    const tokenRes = await fetch(`${apiUrl}/checkout/token/grant`, {
+    const tokenRes = await fetch(`${apiUrl}/tokenized/checkout/token/grant`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,7 +61,7 @@ export async function GET(request: NextRequest) {
     const idToken = tokenData.id_token;
 
     // Step 2: Execute Payment
-    const executeRes = await fetch(`${apiUrl}/checkout/execute`, {
+    const executeRes = await fetch(`${apiUrl}/tokenized/checkout/execute`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

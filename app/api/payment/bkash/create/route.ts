@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Step 1: Grant Token
-    const tokenRes = await fetch(`${apiUrl}/checkout/token/grant`, {
+    const tokenRes = await fetch(`${apiUrl}/tokenized/checkout/token/grant`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
     const callbackURL = `${callbackOrigin}/api/payment/bkash/callback`;
     const invoiceNumber = `INV-${Date.now()}-${Math.floor(1000 + Math.random() * 9000)}`;
 
-    const createRes = await fetch(`${apiUrl}/checkout/create`, {
+    const createRes = await fetch(`${apiUrl}/tokenized/checkout/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
