@@ -43,6 +43,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       demoUrl,
       videoUrl,
       icon,
+      downloadFile,
       productType,
       en,
       bn
@@ -92,6 +93,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           demoUrl: demoUrl || "/services",
           videoUrl: videoUrl || "",
           icon: icon || "",
+          downloadFile: downloadFile || "",
           productType: productType || "external"
         });
       } else {
@@ -113,6 +115,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           demoUrl: demoUrl || "/services",
           videoUrl: videoUrl || "",
           icon: icon || "",
+          downloadFile: downloadFile || "",
           productType: productType || "external",
           locale: "en",
           translationGroupId
@@ -144,6 +147,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           demoUrl: demoUrl || "/services",
           videoUrl: videoUrl || "",
           icon: icon || "",
+          downloadFile: downloadFile || "",
           productType: productType || "external"
         });
       } else {
@@ -165,6 +169,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           demoUrl: demoUrl || "/services",
           videoUrl: videoUrl || "",
           icon: icon || "",
+          downloadFile: downloadFile || "",
           productType: productType || "external",
           locale: "bn",
           translationGroupId

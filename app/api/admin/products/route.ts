@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
       demoUrl,
       videoUrl,
       icon,
+      downloadFile,
       productType,
       en,
       bn
@@ -84,6 +85,7 @@ export async function POST(request: NextRequest) {
         demoUrl: demoUrl || "/services",
         videoUrl: videoUrl || "",
         icon: icon || "",
+        downloadFile: downloadFile || "",
         productType: productType || "external",
         locale: "en",
         translationGroupId
@@ -118,6 +120,7 @@ export async function POST(request: NextRequest) {
         demoUrl: demoUrl || "/services",
         videoUrl: videoUrl || "",
         icon: icon || "",
+        downloadFile: downloadFile || "",
         productType: productType || "external",
         locale: "bn",
         translationGroupId
