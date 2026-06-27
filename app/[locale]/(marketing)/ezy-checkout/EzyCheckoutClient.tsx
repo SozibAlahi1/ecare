@@ -19,18 +19,18 @@ const getIconComponent = (iconName: string) => {
   return Icon || HelpCircle;
 };
 
-export default function EzyCheckoutClient({ initialData }: { initialData?: any }) {
+export default function EzyCheckoutClient({ initialData, dbProduct }: { initialData?: any; dbProduct?: any }) {
   const t = useTranslations("EzyCheckout");
   const router = useRouter();
 
   const handleBuyCheckout = () => {
     addToCart({
-      slug: "ezy-checkout",
-      title: "Ezy Checkout",
-      price: 24,
+      slug: dbProduct?.slug || "ezy-checkout",
+      title: dbProduct?.title || "Ezy Checkout",
+      price: dbProduct?.price ?? 2880,
       licenseType: "regular",
       extendSupport: false,
-      supportPrice: 0,
+      supportPrice: dbProduct?.supportPrice ?? 850,
       quantity: 1,
     });
     router.push("/checkout");
@@ -778,7 +778,7 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
 
                 <div className="flex items-baseline text-slate-800 dark:text-white py-2 border-b border-slate-100 dark:border-slate-800/60">
                   <span className="text-4xl sm:text-5xl font-black tracking-tight">
-                    ৳{initialData ? initialData.proPrice : "2,800"}
+                    ৳{dbProduct ? dbProduct.price.toLocaleString() : (initialData ? initialData.proPrice : "2,800")}
                   </span>
                   <span className="text-xs sm:text-sm text-slate-500 font-normal ml-2">
                     / {initialData?.proLifetime || t("proLifetime")}
