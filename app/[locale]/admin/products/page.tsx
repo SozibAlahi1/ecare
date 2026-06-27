@@ -621,7 +621,7 @@ export default function AdminProductsPage() {
                   <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Downloadable Plugin File (ZIP)</label>
                   <div className="flex gap-2 items-center">
                     <Input value={downloadFile} onChange={(e) => setDownloadFile(e.target.value)} placeholder="Plugin file path or upload" className="flex-1" />
-                    <ImageUploader value={downloadFile} onChange={setDownloadFile} label="Upload File" />
+                    <ImageUploader value={downloadFile} onChange={setDownloadFile} label="Upload File" accept=".zip,application/zip,application/x-zip-compressed" />
                   </div>
                 </div>
               </div>

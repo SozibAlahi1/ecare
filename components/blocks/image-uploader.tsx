@@ -8,9 +8,17 @@ interface ImageUploaderProps {
   value: string;
   onChange: (url: string) => void;
   label?: string;
+  accept?: string;
+  maxSizeMB?: number;
 }
 
-export default function ImageUploader({ value, onChange, label = "Upload Image" }: ImageUploaderProps) {
+export default function ImageUploader({ 
+  value, 
+  onChange, 
+  label = "Upload Image", 
+  accept = "image/*",
+  maxSizeMB = 50
+}: ImageUploaderProps) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,9 +26,9 @@ export default function ImageUploader({ value, onChange, label = "Upload Image" 
     const file = e.target.files?.[0];
     if (!file) return;
 
-    // Check size limit (e.g. 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      setError("File size should be less than 5MB");
+    // Check size limit dynamically (default 50MB)
+    if (file.size > maxSizeMB * 1024 * 1024) {
+      setError(`File size should be less than ${maxSizeMB}MB`);
       return;
     }
 
@@ -51,22 +59,28 @@ export default function ImageUploader({ value, onChange, label = "Upload Image" 
 
   const id = `file-uploader-${Math.random().toString(36).substr(2, 9)}`;
 
+  const isZip = value && (value.endsWith(".zip") || value.includes(".zip?"));
+
   return (
     <div className="space-y-1">
       <div className="flex items-center gap-3">
         {value && (
-          <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-border bg-slate-100 dark:bg-slate-800">
-            <img
-              src={value}
-              alt="Preview"
-              className="w-full h-full object-cover"
-            />
+          <div className="relative w-10 h-10 rounded-lg overflow-hidden shrink-0 border border-border bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+            {isZip ? (
+              <span className="text-[9px] font-black text-slate-500 uppercase tracking-wider">ZIP</span>
+            ) : (
+              <img
+                src={value}
+                alt="Preview"
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
         )}
         
         <input
           type="file"
-          accept="image/*"
+          accept={accept}
           onChange={handleUpload}
           className="hidden"
           id={id}
