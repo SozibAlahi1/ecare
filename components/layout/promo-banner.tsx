@@ -77,17 +77,17 @@ export default function PromoBanner({ text, linkText, suffix, locale }: PromoBan
   const secondsLabel = locale === "bn" ? "সে" : "s";
 
   return (
-    <div className="relative w-full bg-blue-600 text-white py-2.5 px-4 text-center text-xs md:text-sm font-semibold select-none flex items-center justify-center gap-1.5 overflow-hidden transition-all duration-300">
+    <div className="relative w-full bg-primary text-primary-foreground py-2.5 px-4 text-center text-xs md:text-sm font-semibold select-none flex items-center justify-center gap-1.5 overflow-hidden transition-all duration-300">
       <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
         <span>{text}</span>
-        <Link href="/services" className="underline hover:text-blue-100 transition-colors font-bold">
+        <Link href="/services" className="underline hover:opacity-90 transition-colors font-bold text-white">
           {linkText}
         </Link>
         <span className="flex items-center gap-1 font-bold text-yellow-300">
           <Flame className="w-4 h-4 fill-yellow-300 animate-pulse text-yellow-300 inline" />
           <span>{suffix}</span>
         </span>
-        <div className="inline-flex gap-1 font-mono bg-blue-700/60 dark:bg-blue-900/40 px-2 py-0.5 rounded text-white text-[11px] md:text-xs">
+        <div className="inline-flex gap-1 font-mono bg-black/20 dark:bg-white/15 px-2 py-0.5 rounded text-white text-[11px] md:text-xs">
           <span>{formatNumber(timeLeft.hours)}{hoursLabel}</span>
           <span>{formatNumber(timeLeft.minutes)}{minutesLabel}</span>
           <span>{formatNumber(timeLeft.seconds)}{secondsLabel}</span>
