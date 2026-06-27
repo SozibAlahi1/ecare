@@ -307,6 +307,30 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    // Auto-create bkash_settings if not present
+    const bkashSettings = await Page.findOne({ key: "bkash_settings" });
+    if (!bkashSettings) {
+      await Page.create({
+        key: "bkash_settings",
+        content: {
+          en: JSON.stringify({
+            apiUrl: process.env.BKASH_API_URL || "https://tokenized.sandbox.bka.sh/v1.2.0-beta",
+            username: process.env.BKASH_USERNAME || "",
+            password: process.env.BKASH_PASSWORD || "",
+            appKey: process.env.BKASH_APP_KEY || "",
+            appSecret: process.env.BKASH_APP_SECRET || ""
+          }),
+          bn: JSON.stringify({
+            apiUrl: process.env.BKASH_API_URL || "https://tokenized.sandbox.bka.sh/v1.2.0-beta",
+            username: process.env.BKASH_USERNAME || "",
+            password: process.env.BKASH_PASSWORD || "",
+            appKey: process.env.BKASH_APP_KEY || "",
+            appSecret: process.env.BKASH_APP_SECRET || ""
+          })
+        }
+      });
+    }
+
     const pages = await Page.find({});
     return NextResponse.json({ success: true, data: pages });
   } catch (error: any) {

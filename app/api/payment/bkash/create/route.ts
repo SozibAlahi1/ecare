@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
+import { Page } from "@/lib/models";
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,15 +13,26 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const apiUrl = process.env.BKASH_API_URL || "https://tokenized.sandbox.bka.sh/v1.2.0-beta";
-    const username = process.env.BKASH_USERNAME;
-    const password = process.env.BKASH_PASSWORD;
-    const appKey = process.env.BKASH_APP_KEY;
-    const appSecret = process.env.BKASH_APP_SECRET;
+    await dbConnect();
+    const dbSettingsDoc = await Page.findOne({ key: "bkash_settings" });
+    let dbSettings: any = {};
+    if (dbSettingsDoc && dbSettingsDoc.content && dbSettingsDoc.content.en) {
+      try {
+        dbSettings = JSON.parse(dbSettingsDoc.content.en);
+      } catch (e) {
+        dbSettings = {};
+      }
+    }
+
+    const apiUrl = dbSettings.apiUrl || process.env.BKASH_API_URL || "https://tokenized.sandbox.bka.sh/v1.2.0-beta";
+    const username = dbSettings.username || process.env.BKASH_USERNAME;
+    const password = dbSettings.password || process.env.BKASH_PASSWORD;
+    const appKey = dbSettings.appKey || process.env.BKASH_APP_KEY;
+    const appSecret = dbSettings.appSecret || process.env.BKASH_APP_SECRET;
 
     if (!username || !password || !appKey || !appSecret) {
       return NextResponse.json(
-        { success: false, error: "bKash configuration credentials are missing in environment variables" },
+        { success: false, error: "bKash configuration credentials are missing. Please configure them in the Admin Settings panel." },
         { status: 500 }
       );
     }

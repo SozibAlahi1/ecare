@@ -40,6 +40,14 @@ interface ContactFields {
   mapUrl?: string;
 }
 
+interface BkashSettingsFields {
+  apiUrl: string;
+  username: string;
+  password:  string;
+  appKey: string;
+  appSecret: string;
+}
+
 interface OfferPopupFields {
   title: string;
   subtitle: string;
@@ -239,6 +247,15 @@ export default function AdminPagesPage() {
   const [contactEn, setContactEn] = useState<ContactFields>({ phone: "", email: "", address: "", hours: "", mapUrl: "" });
   const [contactBn, setContactBn] = useState<ContactFields>({ phone: "", email: "", address: "", hours: "", mapUrl: "" });
 
+  // Form Fields for bkash_settings (structured JSON)
+  const [bkashSettings, setBkashSettings] = useState<BkashSettingsFields>({
+    apiUrl: "https://tokenized.sandbox.bka.sh/v1.2.0-beta",
+    username: "",
+    password: "",
+    appKey: "",
+    appSecret: ""
+  });
+
   // Form Fields for offer_popup (structured JSON)
   const [offerEn, setOfferEn] = useState<OfferPopupFields>({ title: "", subtitle: "", discountPercent: "", discountCode: "", isActive: "true" });
   const [offerBn, setOfferBn] = useState<OfferPopupFields>({ title: "", subtitle: "", discountPercent: "", discountCode: "", isActive: "true" });
@@ -370,6 +387,18 @@ export default function AdminPagesPage() {
       } catch (e) {
         setContactEn({ phone: "", email: "", address: "", hours: "", mapUrl: "" });
         setContactBn({ phone: "", email: "", address: "", hours: "", mapUrl: "" });
+      }
+    } else if (page.key === "bkash_settings") {
+      try {
+        setBkashSettings(JSON.parse(page.content.en || "{}"));
+      } catch (e) {
+        setBkashSettings({
+          apiUrl: "https://tokenized.sandbox.bka.sh/v1.2.0-beta",
+          username: "",
+          password: "",
+          appKey: "",
+          appSecret: ""
+        });
       }
     } else if (page.key === "offer_popup") {
       try {
@@ -641,6 +670,9 @@ export default function AdminPagesPage() {
       if (selectedKey === "contact_info") {
         return JSON.stringify(lang === "en" ? contactEn : contactBn);
       }
+      if (selectedKey === "bkash_settings") {
+        return JSON.stringify(bkashSettings);
+      }
       if (selectedKey === "offer_popup") {
         return JSON.stringify(lang === "en" ? offerEn : offerBn);
       }
@@ -724,6 +756,8 @@ export default function AdminPagesPage() {
         return "Privacy Policy";
       case "contact_info":
         return "Global Contact Information";
+      case "bkash_settings":
+        return "bKash Payment Gateway Settings";
       case "offer_popup":
         return "Welcome Offer Popup";
       case "ezy_checkout":
@@ -821,6 +855,30 @@ export default function AdminPagesPage() {
                       <Input value={contactBn.mapUrl || ""} onChange={(e) => setContactBn({ ...contactBn, mapUrl: e.target.value })} placeholder="e.g. https://www.google.com/maps/embed?..." />
                     </div>
                   </div>
+                </div>
+              </div>
+            ) : selectedKey === "bkash_settings" ? (
+              <div className="space-y-4 max-w-xl">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">bKash API URL Base</label>
+                  <Input value={bkashSettings.apiUrl} onChange={(e) => setBkashSettings({ ...bkashSettings, apiUrl: e.target.value })} placeholder="e.g. https://tokenized.sandbox.bka.sh/v1.2.0-beta" />
+                  <p className="text-[10px] text-slate-400">Sandbox: https://tokenized.sandbox.bka.sh/v1.2.0-beta, Production: https://tokenized.pay.bka.sh/v1.2.0-beta</p>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">Merchant Username</label>
+                  <Input value={bkashSettings.username} onChange={(e) => setBkashSettings({ ...bkashSettings, username: e.target.value })} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">Merchant Password</label>
+                  <Input type="password" value={bkashSettings.password} onChange={(e) => setBkashSettings({ ...bkashSettings, password: e.target.value })} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">App Key</label>
+                  <Input value={bkashSettings.appKey} onChange={(e) => setBkashSettings({ ...bkashSettings, appKey: e.target.value })} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-500">App Secret</label>
+                  <Input type="password" value={bkashSettings.appSecret} onChange={(e) => setBkashSettings({ ...bkashSettings, appSecret: e.target.value })} />
                 </div>
               </div>
             ) : selectedKey === "offer_popup" ? (
@@ -2616,6 +2674,10 @@ export default function AdminPagesPage() {
                 {page.key === "contact_info" ? (
                   <p className="text-xs text-slate-400 line-clamp-3 mb-6">
                     Dynamic phone, email, working hours, and address metadata settings.
+                  </p>
+                ) : page.key === "bkash_settings" ? (
+                  <p className="text-xs text-slate-400 line-clamp-3 mb-6">
+                    Manage Merchant credentials, keys, app secrets, and target API endpoint environments for bKash.
                   </p>
                 ) : page.key === "ezy_checkout" ? (
                   <p className="text-xs text-slate-400 line-clamp-3 mb-6">

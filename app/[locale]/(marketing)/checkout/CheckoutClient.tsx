@@ -290,17 +290,9 @@ export default function CheckoutClient() {
                       <p className="text-[11px] text-muted-foreground">Pay securely via bKash Account, Verification Code & PIN</p>
                     </div>
                   </div>
-                  {/* bKash SVG Logo */}
-                  <div className="bg-white px-3 py-1.5 rounded-xl shadow-sm border border-slate-100 shrink-0 flex items-center">
-                    <svg width="85" height="24" viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M10 2L1 14H10V2Z" fill="#E2136E" />
-                      <path d="M12 2V14H21L12 2Z" fill="#B10E5B" />
-                      <path d="M10 16L1 28H10V16Z" fill="#E2136E" />
-                      <path d="M12 16V28H21L12 16Z" fill="#B10E5B" />
-                      <text x="28" y="23" fill="#E2136E" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="22" letterSpacing="-0.5">
-                        bKash
-                      </text>
-                    </svg>
+                  {/* bKash WebP Logo */}
+                  <div className="bg-white px-2 py-1.5 rounded-xl shadow-sm border border-slate-100 shrink-0 flex items-center">
+                    <img src="/uploads/bkash.webp" alt="bKash Logo" className="h-7 w-auto object-contain" />
                   </div>
                 </div>
               </div>
