@@ -8,6 +8,8 @@ import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { CheckCircle2, Loader2, Lock, X } from "lucide-react";
 
+import { useSearchParams, useRouter } from "next/navigation";
+
 export default function CheckoutClient() {
   const t = useTranslations("Checkout");
   const tCart = useTranslations("Cart");
@@ -28,13 +30,11 @@ export default function CheckoutClient() {
   });
   const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
   
-  // bKash Checkout Modal Flow
-  const [bkashModal, setBkashModal] = useState(false);
-  const [bkashStep, setBkashStep] = useState<"number" | "otp" | "pin" | "processing">("number");
-  const [bkashNumber, setBkashNumber] = useState("");
-  const [bkashOtp, setBkashOtp] = useState("");
-  const [bkashPin, setBkashPin] = useState("");
-  const [bkashError, setBkashError] = useState("");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  // bKash Checkout States
+  const [payingState, setPayingState] = useState(false);
 
   useEffect(() => {
     setItems(getCartItems());
@@ -48,8 +48,23 @@ export default function CheckoutClient() {
         email: parsedUser.email || "",
       }));
     }
+
+    // Check payment callback status from URL
+    const paymentStatus = searchParams.get("paymentStatus");
+    const trxID = searchParams.get("trxID");
+    if (paymentStatus === "success" && trxID) {
+      setTxnId(trxID);
+      clearCart();
+      setOrderComplete(true);
+      router.replace("/checkout");
+    } else if (paymentStatus === "failed") {
+      const errorMsg = searchParams.get("error") || "";
+      alert(`bKash payment failed or was cancelled! ${errorMsg ? `(${errorMsg})` : ""}`);
+      router.replace("/checkout");
+    }
+
     setLoading(false);
-  }, []);
+  }, [searchParams]);
 
   const subtotal = items.reduce((acc, item) => {
     let price = item.price;
@@ -79,44 +94,32 @@ export default function CheckoutClient() {
     }
   };
 
-  const handlePayClick = (e: React.FormEvent) => {
+  const handlePayClick = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
-    setBkashModal(true);
-    setBkashStep("number");
-    setBkashError("");
-  };
+    
+    setPayingState(true);
+    try {
+      const response = await fetch("/api/payment/bkash/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: (total * 120).toFixed(0),
+          payerReference: billing.phone || user?.phone || "guest_reference"
+        })
+      });
 
-  const handleBkashSubmit = () => {
-    setBkashError("");
-    if (bkashStep === "number") {
-      if (!/^(01)[3-9]\d{8}$/.test(bkashNumber)) {
-        setBkashError("Invalid bKash number. Must be a valid 11-digit Bangladeshi mobile number.");
-        return;
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to initiate payment");
       }
-      setBkashStep("otp");
-    } else if (bkashStep === "otp") {
-      if (bkashOtp.length !== 6 || !/^\d+$/.test(bkashOtp)) {
-        setBkashError("OTP must be 6 digits.");
-        return;
+
+      if (data.bkashURL) {
+        window.location.href = data.bkashURL;
       }
-      setBkashStep("pin");
-    } else if (bkashStep === "pin") {
-      if (bkashPin.length !== 4 || !/^\d+$/.test(bkashPin)) {
-        setBkashError("PIN must be 4 digits.");
-        return;
-      }
-      
-      setBkashStep("processing");
-      
-      // Simulate API call to bKash PGW
-      setTimeout(() => {
-        const randTxn = "BKSH" + Math.random().toString(36).substring(2, 10).toUpperCase();
-        setTxnId(randTxn);
-        clearCart();
-        setOrderComplete(true);
-        setBkashModal(false);
-      }, 3000);
+    } catch (err: any) {
+      alert(`Payment Error: ${err.message}`);
+      setPayingState(false);
     }
   };
 
@@ -349,143 +352,26 @@ export default function CheckoutClient() {
                 {/* Submit Button */}
                 <Button
                   onClick={handlePayClick}
-                  className="w-full h-12 bg-[#e2136e] hover:bg-[#c10e5b] text-white font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                  disabled={payingState}
+                  className="w-full h-12 bg-[#e2136e] hover:bg-[#c10e5b] text-white font-bold uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <Lock className="w-4 h-4" />
-                  {t("placeOrder")}
+                  {payingState ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      {t("processing") || "Processing..."}
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-4 h-4" />
+                      {t("placeOrder")}
+                    </>
+                  )}
                 </Button>
               </div>
             </div>
           </div>
         )}
       </Container>
-
-      {/* Simulated bKash PGW Modal Overlay */}
-      {bkashModal && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-[#e2136e] w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl border border-white/10 flex flex-col items-stretch text-white animate-in zoom-in-95 duration-200">
-            
-            {/* bKash Logo Header */}
-            <div className="bg-white py-4 px-8 flex justify-between items-center relative border-b border-slate-100">
-              <svg width="105" height="30" viewBox="0 0 110 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 2L1 14H10V2Z" fill="#E2136E" />
-                <path d="M12 2V14H21L12 2Z" fill="#B10E5B" />
-                <path d="M10 16L1 28H10V16Z" fill="#E2136E" />
-                <path d="M12 16V28H21L12 16Z" fill="#B10E5B" />
-                <text x="28" y="23" fill="#E2136E" fontFamily="system-ui, sans-serif" fontWeight="900" fontSize="22" letterSpacing="-0.5">
-                  bKash
-                </text>
-              </svg>
-              <button 
-                onClick={() => setBkashModal(false)}
-                className="text-slate-400 hover:text-slate-600 transition-colors cursor-pointer"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-            
-            {/* Merchant / Payment Summary Banner */}
-            <div className="bg-[#b10e5b] py-3.5 px-6 flex justify-between text-xs font-bold border-t border-white/10">
-              <span className="opacity-90">Amount: ৳{(total * 120).toFixed(0)}</span>
-            </div>
-
-            {/* Modal Content */}
-            <div className="p-6 flex-1 flex flex-col space-y-4">
-              {bkashStep === "number" && (
-                <div className="space-y-4">
-                  <div className="space-y-1 text-center">
-                    <h3 className="font-bold text-sm">{t("bkashNumber")}</h3>
-                    <p className="text-[11px] opacity-75">Enter your active bKash personal wallet number</p>
-                  </div>
-                  <input
-                    type="tel"
-                    maxLength={11}
-                    value={bkashNumber}
-                    onChange={(e) => setBkashNumber(e.target.value.replace(/\D/g, ""))}
-                    className="w-full text-center py-2.5 px-4 rounded-xl bg-white text-slate-800 text-lg font-bold border-none focus:ring-4 focus:ring-white/20 outline-none"
-                    placeholder={t("bkashPlaceholder")}
-                  />
-                </div>
-              )}
-
-              {bkashStep === "otp" && (
-                <div className="space-y-4">
-                  <div className="space-y-1 text-center">
-                    <h3 className="font-bold text-sm">{t("bkashOtp")}</h3>
-                    <p className="text-[11px] opacity-75">Enter the 6-digit OTP sent to your mobile</p>
-                  </div>
-                  <input
-                    type="text"
-                    maxLength={6}
-                    value={bkashOtp}
-                    onChange={(e) => setBkashOtp(e.target.value.replace(/\D/g, ""))}
-                    className="w-full text-center py-2.5 px-4 rounded-xl bg-white text-slate-800 text-lg font-bold tracking-widest border-none focus:ring-4 focus:ring-white/20 outline-none"
-                    placeholder={t("otpPlaceholder")}
-                  />
-                </div>
-              )}
-
-              {bkashStep === "pin" && (
-                <div className="space-y-4">
-                  <div className="space-y-1 text-center">
-                    <h3 className="font-bold text-sm">{t("bkashPin")}</h3>
-                    <p className="text-[11px] opacity-75">Enter your secure 4-digit bKash PIN code</p>
-                  </div>
-                  <input
-                    type="password"
-                    maxLength={4}
-                    value={bkashPin}
-                    onChange={(e) => setBkashPin(e.target.value.replace(/\D/g, ""))}
-                    className="w-full text-center py-2.5 px-4 rounded-xl bg-white text-slate-800 text-lg font-bold tracking-widest border-none focus:ring-4 focus:ring-white/20 outline-none"
-                    placeholder={t("pinPlaceholder")}
-                  />
-                </div>
-              )}
-
-              {bkashStep === "processing" && (
-                <div className="py-8 flex flex-col items-center justify-center space-y-4 text-center">
-                  <Loader2 className="w-10 h-10 animate-spin text-white" />
-                  <p className="text-sm font-bold tracking-wide">{t("processing")}</p>
-                </div>
-              )}
-
-              {/* bKash Errors */}
-              {bkashError && (
-                <p className="text-xs font-semibold text-center bg-white/20 py-2 px-3 rounded-lg border border-white/10 text-white animate-pulse">
-                  {bkashError}
-                </p>
-              )}
-
-              {/* bKash Actions */}
-              {bkashStep !== "processing" && (
-                <div className="flex gap-3 pt-2">
-                  <button
-                    onClick={() => {
-                      if (bkashStep === "number") setBkashModal(false);
-                      if (bkashStep === "otp") setBkashStep("number");
-                      if (bkashStep === "pin") setBkashStep("otp");
-                    }}
-                    className="flex-1 py-2.5 rounded-xl border border-white/20 text-xs font-bold hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
-                  >
-                    CLOSE
-                  </button>
-                  <button
-                    onClick={handleBkashSubmit}
-                    className="flex-1 py-2.5 bg-white text-[#e2136e] rounded-xl text-xs font-bold hover:bg-slate-50 active:scale-95 transition-all cursor-pointer"
-                  >
-                    PROCEED
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* bKash Safety Banner */}
-            <div className="bg-[#b10e5b] py-3 text-center text-[10px] opacity-80 border-t border-white/10">
-              🔒 Safe & Secure simulated transaction
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
