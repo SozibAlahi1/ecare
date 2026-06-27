@@ -226,40 +226,42 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
       </section>
 
       {/* 2. Key Features Showcase Grid */}
-      <section className="py-24 bg-slate-50 dark:bg-[#0a0f1d] text-slate-800 dark:text-white relative transition-colors duration-300 border-b border-slate-200/50 dark:border-slate-800/40">
+      <section className="py-24 bg-[#f4f7fc] dark:bg-[#0a0f1d] text-slate-800 dark:text-white relative transition-colors duration-300 border-b border-slate-200/50 dark:border-slate-800/40">
         {/* Glow effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
         
         <Container className="relative z-10">
           
-          {/* Slider Container Row Wrapped in a Large Card */}
-          <div className="relative z-20 p-6 sm:p-12 pt-8 sm:pt-12">
+          <div className="relative z-20 px-4 sm:px-6">
             
-            {/* Section Headers outside the Card Container */}
-            <div className="text-center space-y-3 mb-12">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary text-white text-[10px] font-black uppercase tracking-wider">
+            {/* Section Headers */}
+            <div className="text-center space-y-3 mb-16">
+              <span className="inline-block px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
                 {initialData?.featuresBadge || t("uniqueFeatures")}
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-800 dark:text-white leading-tight">
+              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
                 {initialData?.featuresTitle || t("powerfulFeatures")}
               </h2>
             </div>
  
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-16">
               {featuresList.map((feature: any, i: number) => (
                 <div
                   key={i}
-                  className="relative overflow-hidden bg-white dark:bg-slate-900/50 text-slate-800 dark:text-white rounded-3xl p-8 min-h-[220px] flex flex-col justify-start text-left border border-slate-100 dark:border-slate-800/40 shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(226,19,110,0.04)] hover:border-primary/20 -translate-y-0 hover:-translate-y-1.5 transition-all duration-350 ease-out group"
+                  className="flex flex-col items-start text-left border-l border-slate-200 dark:border-slate-800/60 pl-6 lg:pl-8 transition-all duration-300 group"
                 >
-                  {/* Premium Styled Icon Box at the top left */}
-                  <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center mb-6 border border-primary/10 shadow-[inset_0_2px_4px_rgba(226,19,110,0.06)] group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                    <feature.icon className="w-5.5 h-5.5 stroke-[1.5]" />
+                  {/* Premium Styled Icon Box at the top left matching user image */}
+                  <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-[0_8px_20px_rgba(37,99,235,0.35)] group-hover:scale-105 transition-all duration-300">
+                    <feature.icon className="w-5.5 h-5.5 stroke-[1.8]" />
                   </div>
 
-                  <h3 className="font-black text-lg text-slate-800 dark:text-white mb-3 tracking-tight transition-colors group-hover:text-primary">
+                  {/* Horizontal line divider under the icon */}
+                  <div className="w-full border-t border-slate-200 dark:border-slate-800/60 my-6" />
+
+                  <h3 className="font-bold text-xl text-slate-900 dark:text-white mb-3 tracking-tight group-hover:text-blue-600 transition-colors duration-200">
                     {feature.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                     {feature.desc}
                   </p>
                 </div>
