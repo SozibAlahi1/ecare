@@ -77,6 +77,17 @@ interface EzyCheckoutFields {
   aboutTitle: string;
   aboutImage: string;
 
+  // Feature Details (Section 3)
+  sec3Badge: string;
+  sec3Title: string;
+  sec3Desc: string;
+  sec3Feature1Title: string;
+  sec3Feature1Desc: string;
+  sec3Feature2Title: string;
+  sec3Feature2Desc: string;
+  sec3CtaText: string;
+  sec3Image: string;
+
   // Pricing Section
   pricingTitle: string;
   pricingSub: string;
@@ -213,6 +224,7 @@ export default function AdminPagesPage() {
     heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
     featuresBadge: "", featuresTitle: "", featuresList: [],
     aboutBadge: "", aboutTitle: "", aboutImage: "",
+    sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
     pricingTitle: "", pricingSub: "", planFree: "", planFreeDesc: "", freePrice: "", freeLifetime: "",
     freeFeature1: "", freeFeature2: "", freeFeature3: "", downloadNow: "", planPro: "", planProDesc: "",
     proPrice: "", proLifetime: "", proFeature1: "", proFeature2: "", proFeature3: "", proFeature4: "", getPro: "", recTag: "",
@@ -222,6 +234,7 @@ export default function AdminPagesPage() {
     heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
     featuresBadge: "", featuresTitle: "", featuresList: [],
     aboutBadge: "", aboutTitle: "", aboutImage: "",
+    sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
     pricingTitle: "", pricingSub: "", planFree: "", planFreeDesc: "", freePrice: "", freeLifetime: "",
     freeFeature1: "", freeFeature2: "", freeFeature3: "", downloadNow: "", planPro: "", planProDesc: "",
     proPrice: "", proLifetime: "", proFeature1: "", proFeature2: "", proFeature3: "", proFeature4: "", getPro: "", recTag: "",
@@ -353,6 +366,15 @@ export default function AdminPagesPage() {
           aboutBadge: parsedEn.aboutBadge || "",
           aboutTitle: parsedEn.aboutTitle || "",
           aboutImage: parsedEn.aboutImage || "",
+          sec3Badge: parsedEn.sec3Badge || "",
+          sec3Title: parsedEn.sec3Title || "",
+          sec3Desc: parsedEn.sec3Desc || "",
+          sec3Feature1Title: parsedEn.sec3Feature1Title || "",
+          sec3Feature1Desc: parsedEn.sec3Feature1Desc || "",
+          sec3Feature2Title: parsedEn.sec3Feature2Title || "",
+          sec3Feature2Desc: parsedEn.sec3Feature2Desc || "",
+          sec3CtaText: parsedEn.sec3CtaText || "",
+          sec3Image: parsedEn.sec3Image || "",
           pricingTitle: parsedEn.pricingTitle || "",
           pricingSub: parsedEn.pricingSub || "",
           planFree: parsedEn.planFree || "",
@@ -389,6 +411,15 @@ export default function AdminPagesPage() {
           aboutBadge: parsedBn.aboutBadge || "",
           aboutTitle: parsedBn.aboutTitle || "",
           aboutImage: parsedBn.aboutImage || "",
+          sec3Badge: parsedBn.sec3Badge || "",
+          sec3Title: parsedBn.sec3Title || "",
+          sec3Desc: parsedBn.sec3Desc || "",
+          sec3Feature1Title: parsedBn.sec3Feature1Title || "",
+          sec3Feature1Desc: parsedBn.sec3Feature1Desc || "",
+          sec3Feature2Title: parsedBn.sec3Feature2Title || "",
+          sec3Feature2Desc: parsedBn.sec3Feature2Desc || "",
+          sec3CtaText: parsedBn.sec3CtaText || "",
+          sec3Image: parsedBn.sec3Image || "",
           pricingTitle: parsedBn.pricingTitle || "",
           pricingSub: parsedBn.pricingSub || "",
           planFree: parsedBn.planFree || "",
@@ -417,6 +448,7 @@ export default function AdminPagesPage() {
           heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
           featuresBadge: "", featuresTitle: "", featuresList: [],
           aboutBadge: "", aboutTitle: "", aboutImage: "",
+          sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
           pricingTitle: "", pricingSub: "", planFree: "", planFreeDesc: "", freePrice: "", freeLifetime: "",
           freeFeature1: "", freeFeature2: "", freeFeature3: "", downloadNow: "", planPro: "", planProDesc: "",
           proPrice: "", proLifetime: "", proFeature1: "", proFeature2: "", proFeature3: "", proFeature4: "", getPro: "", recTag: "",
@@ -800,7 +832,7 @@ export default function AdminPagesPage() {
               <div className="space-y-6">
                 {/* Builder Tabs Navigation */}
                 <div className="flex flex-wrap gap-2 border-b border-border pb-4">
-                  {["hero", "features", "overview", "pricing", "faqs"].map((tab) => (
+                  {["hero", "features", "features2", "overview", "pricing", "faqs"].map((tab) => (
                     <button
                       key={tab}
                       type="button"
@@ -811,7 +843,7 @@ export default function AdminPagesPage() {
                           : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
                       }`}
                     >
-                      {tab === "faqs" ? "FAQs" : tab === "overview" ? "Product Showcase" : tab}
+                      {tab === "faqs" ? "FAQs" : tab === "overview" ? "Product Showcase" : tab === "features2" ? "Feature Details" : tab}
                     </button>
                   ))}
                 </div>
@@ -1068,6 +1100,111 @@ export default function AdminPagesPage() {
                             </div>
                           </div>
                         ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                 {/* Feature Details Tab */}
+                {ezyTab === "features2" && (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-border pb-2">English Feature Details</h3>
+                      <div className="space-y-3">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Badge Title</label>
+                          <Input value={ezyCheckoutEn.sec3Badge} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Badge: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Heading Title</label>
+                          <Input value={ezyCheckoutEn.sec3Title} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Description</label>
+                          <textarea
+                            rows={3}
+                            value={ezyCheckoutEn.sec3Desc}
+                            onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Desc: e.target.value })}
+                            className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 1 Title</label>
+                          <Input value={ezyCheckoutEn.sec3Feature1Title} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Feature1Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 1 Description</label>
+                          <Input value={ezyCheckoutEn.sec3Feature1Desc} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Feature1Desc: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 2 Title</label>
+                          <Input value={ezyCheckoutEn.sec3Feature2Title} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Feature2Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 2 Description</label>
+                          <Input value={ezyCheckoutEn.sec3Feature2Desc} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Feature2Desc: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">CTA Button Text</label>
+                          <Input value={ezyCheckoutEn.sec3CtaText} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3CtaText: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature Mockup Image</label>
+                          <div className="flex gap-2">
+                            <Input value={ezyCheckoutEn.sec3Image} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Image: e.target.value })} className="flex-1" />
+                            <ImageUploader value={ezyCheckoutEn.sec3Image} onChange={(val) => setEzyCheckoutEn({ ...ezyCheckoutEn, sec3Image: val })} />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-border pb-2">Bengali Feature Details</h3>
+                      <div className="space-y-3">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Badge Title</label>
+                          <Input value={ezyCheckoutBn.sec3Badge} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Badge: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Heading Title</label>
+                          <Input value={ezyCheckoutBn.sec3Title} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Description</label>
+                          <textarea
+                            rows={3}
+                            value={ezyCheckoutBn.sec3Desc}
+                            onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Desc: e.target.value })}
+                            className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                          />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 1 Title</label>
+                          <Input value={ezyCheckoutBn.sec3Feature1Title} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Feature1Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 1 Description</label>
+                          <Input value={ezyCheckoutBn.sec3Feature1Desc} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Feature1Desc: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 2 Title</label>
+                          <Input value={ezyCheckoutBn.sec3Feature2Title} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Feature2Title: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature 2 Description</label>
+                          <Input value={ezyCheckoutBn.sec3Feature2Desc} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Feature2Desc: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">CTA Button Text</label>
+                          <Input value={ezyCheckoutBn.sec3CtaText} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3CtaText: e.target.value })} />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Feature Mockup Image</label>
+                          <div className="flex gap-2">
+                            <Input value={ezyCheckoutBn.sec3Image} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Image: e.target.value })} className="flex-1" />
+                            <ImageUploader value={ezyCheckoutBn.sec3Image} onChange={(val) => setEzyCheckoutBn({ ...ezyCheckoutBn, sec3Image: val })} />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

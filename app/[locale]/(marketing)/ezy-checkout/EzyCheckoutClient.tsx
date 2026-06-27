@@ -370,15 +370,15 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
                 <svg className="w-3.5 h-3.5 fill-primary" viewBox="0 0 24 24">
                   <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/>
                 </svg>
-                {t("popupCheckoutBadge")}
+                {initialData?.sec3Badge || t("popupCheckoutBadge")}
               </span>
               
               <h3 className="text-3xl sm:text-4xl font-extrabold text-slate-800 dark:text-white leading-tight tracking-tight">
-                {t("quickCheckoutHeader")}
+                {initialData?.sec3Title || t("quickCheckoutHeader")}
               </h3>
               
               <p className="text-sm text-[#475569] dark:text-slate-400 leading-relaxed font-medium">
-                {t("quickCheckoutDesc")}
+                {initialData?.sec3Desc || t("quickCheckoutDesc")}
               </p>
  
               {/* Service list items */}
@@ -388,8 +388,8 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
                     <Check className="w-3 h-3 stroke-[3]" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{t("instantCheckoutTitle")}</h4>
-                    <p className="text-xs text-[#64748b] dark:text-slate-400 mt-1 font-medium">{t("instantCheckoutDesc")}</p>
+                    <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{initialData?.sec3Feature1Title || t("instantCheckoutTitle")}</h4>
+                    <p className="text-xs text-[#64748b] dark:text-slate-400 mt-1 font-medium">{initialData?.sec3Feature1Desc || t("instantCheckoutDesc")}</p>
                   </div>
                 </div>
  
@@ -398,15 +398,15 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
                     <Check className="w-3 h-3 stroke-[3]" />
                   </div>
                   <div>
-                    <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{t("couponShippingTitle")}</h4>
-                    <p className="text-xs text-[#64748b] dark:text-slate-400 mt-1 font-medium">{t("couponShippingDesc")}</p>
+                    <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{initialData?.sec3Feature2Title || t("couponShippingTitle")}</h4>
+                    <p className="text-xs text-[#64748b] dark:text-slate-400 mt-1 font-medium">{initialData?.sec3Feature2Desc || t("couponShippingDesc")}</p>
                   </div>
                 </div>
               </div>
  
               {/* Button with offset double shadow look */}
               <button onClick={handleBuyCheckout} className="px-8 py-3.5 rounded-2xl bg-primary text-white font-extrabold text-sm tracking-wide shadow-[4px_4px_0px_var(--color-primary-hover)] active:translate-y-1 active:translate-x-1 active:shadow-none transition-all cursor-pointer">
-                {t("downloadBadge")}
+                {initialData?.sec3CtaText || t("downloadBadge")}
               </button>
             </div>
  
@@ -414,7 +414,7 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
             <div className="lg:col-span-7 flex justify-center items-center relative py-2">
               <div className="w-full z-10">
                 <Image
-                  src="/ezy-checkout-hero.png"
+                  src={initialData?.sec3Image || "/ezy-checkout-hero.png"}
                   alt="Ezy Checkout Feature Showcase"
                   width={1051}
                   height={856}

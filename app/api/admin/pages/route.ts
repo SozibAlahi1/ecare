@@ -146,6 +146,17 @@ export async function GET(request: NextRequest) {
             aboutTitle: "Beautiful PopUp Form & Settings Dashboard",
             aboutImage: "https://www.youtube.com/watch?v=s8m6oHByjjI",
             
+            // Feature Details (Section 3)
+            sec3Badge: "WooCommerce PopUp Checkout",
+            sec3Title: "Quick checkout & boost WooCommerce sales",
+            sec3Desc: "Ezy Checkout is a simple yet extremely powerful popup checkout plugin for WooCommerce that allows your customers to complete purchases without leaving the page.",
+            sec3Feature1Title: "Instant checkout popup",
+            sec3Feature1Desc: "Let your customers check out instantly via a beautifully designed checkout popup window.",
+            sec3Feature2Title: "Coupon & shipping rules",
+            sec3Feature2Desc: "Use WooCommerce coupon codes with live validation directly inside the popup checkout form.",
+            sec3CtaText: "Buy Ezycheckout",
+            sec3Image: "/ezy-checkout-hero.png",
+            
             // Pricing Details
             pricingTitle: "Flexible License Plans",
             pricingSub: "Start improving your checkout experience for your business today.",
@@ -205,6 +216,17 @@ export async function GET(request: NextRequest) {
             aboutBadge: "প্রোডাক্ট ওভারভিউ",
             aboutTitle: "আকর্ষণীয় পপআপ ফর্ম এবং সেটিংস ড্যাশবোর্ড",
             aboutImage: "https://www.youtube.com/watch?v=s8m6oHByjjI",
+            
+            // Feature Details (Section 3)
+            sec3Badge: "পপআপ চেকআউট",
+            sec3Title: "দ্রুত চেকআউট এবং WooCommerce বিক্রয় বৃদ্ধি",
+            sec3Desc: "Ezy Checkout হলো WooCommerce-এর জন্য একটি সহজ অথচ অত্যন্ত শক্তিশালী প্লাগিন যা গ্রাহকদের পেজ না ছেড়েই সরাসরি একটি পপআপ মডালের মাধ্যমে তাদের কেনাকাটা সম্পন্ন করতে সাহায্য করে।",
+            sec3Feature1Title: "তাৎক্ষণিক চেকআউট মডাল",
+            sec3Feature1Desc: "একটি চমৎকার ডিজাইনের চেকআউট পপআপ মডাল উইন্ডোর মাধ্যমে গ্রাহকদের মুহূর্তেই চেকআউট করতে দিন।",
+            sec3Feature2Title: "কুপন ও শিপিং নিয়মাবলী",
+            sec3Feature2Desc: "চেকআউট মডালের ভেতরেই সরাসরি লাইভ ভ্যালিডেশন সহ WooCommerce কুপন কোড ব্যবহার করুন।",
+            sec3CtaText: "Buy Ezycheckout",
+            sec3Image: "/ezy-checkout-hero.png",
             
             // Pricing Details
             pricingTitle: "সহজ ও সাশ্রয়ী লাইসেন্স প্ল্যান",
