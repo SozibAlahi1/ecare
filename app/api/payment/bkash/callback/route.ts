@@ -41,8 +41,11 @@ export async function GET(request: NextRequest) {
       headers: {
         "Content-Type": "application/json",
         "Accept": "application/json",
-        username,
-        password
+        "username": username,
+        "password": password,
+        "app_key": appKey,
+        "app_secret": appSecret,
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
       },
       body: JSON.stringify({
         app_key: appKey,
@@ -64,7 +67,8 @@ export async function GET(request: NextRequest) {
         "Content-Type": "application/json",
         "Accept": "application/json",
         Authorization: idToken,
-        "X-APP-Key": appKey
+        "X-APP-Key": appKey,
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36"
       },
       body: JSON.stringify({ paymentID })
     });
