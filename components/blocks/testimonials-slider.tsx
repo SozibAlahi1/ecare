@@ -61,11 +61,25 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
       const firstCard = scrollRef.current.firstElementChild as HTMLElement;
       if (firstCard) {
         const cardWidth = firstCard.clientWidth + 24;
-        const scrollAmount = direction === "left" ? -cardWidth : cardWidth;
-        scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        if (direction === "right") {
+          const isAtEnd = scrollLeft + clientWidth >= scrollWidth - 50;
+          if (isAtEnd) {
+            scrollRef.current.scrollTo({ left: 0, behavior: "smooth" });
+          } else {
+            scrollRef.current.scrollBy({ left: cardWidth, behavior: "smooth" });
+          }
+        } else {
+          const isAtStart = scrollLeft <= 15;
+          if (isAtStart) {
+            scrollRef.current.scrollTo({ left: scrollWidth, behavior: "smooth" });
+          } else {
+            scrollRef.current.scrollBy({ left: -cardWidth, behavior: "smooth" });
+          }
+        }
       }
     }
   };
@@ -137,16 +151,14 @@ export default function TestimonialsSlider({ testimonials }: TestimonialsSliderP
       <div className="flex justify-center items-center gap-4 mt-6">
         <button 
           onClick={() => scroll("left")}
-          disabled={!canScrollLeft}
-          className={`w-11 h-11 rounded-full flex items-center justify-center border border-border/60 bg-white dark:bg-[#121824] shadow-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-95 transition-all duration-200 ${!canScrollLeft ? "opacity-30 cursor-not-allowed" : "cursor-pointer"}`}
+          className="w-11 h-11 rounded-full flex items-center justify-center border border-border/60 bg-white dark:bg-[#121824] shadow-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-95 transition-all duration-200 cursor-pointer"
           aria-label="Previous slide"
         >
           <ChevronLeft className="w-5 h-5" />
         </button>
         <button 
           onClick={() => scroll("right")}
-          disabled={!canScrollRight}
-          className={`w-11 h-11 rounded-full flex items-center justify-center border border-border/60 bg-white dark:bg-[#121824] shadow-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-95 transition-all duration-200 ${!canScrollRight ? "opacity-30 cursor-not-allowed" : "cursor-pointer"}`}
+          className="w-11 h-11 rounded-full flex items-center justify-center border border-border/60 bg-white dark:bg-[#121824] shadow-sm text-foreground hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-95 transition-all duration-200 cursor-pointer"
           aria-label="Next slide"
         >
           <ChevronRight className="w-5 h-5" />
