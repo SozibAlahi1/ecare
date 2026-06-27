@@ -372,7 +372,7 @@ export default function CheckoutClient() {
                           </p>
                           <p className="text-[11px] text-muted-foreground">Qty: {item.quantity}</p>
                         </div>
-                        <span className="font-bold text-slate-800 dark:text-white shrink-0">৳{(itemPrice * item.quantity * 120).toFixed(0)}</span>
+                        <span className="font-bold text-slate-800 dark:text-white shrink-0">৳{(itemPrice * item.quantity).toFixed(0)}</span>
                       </div>
                     );
                   })}
@@ -382,15 +382,15 @@ export default function CheckoutClient() {
                 <div className="border-t border-border/40 pt-4 space-y-2.5 text-sm font-medium">
                   <div className="flex justify-between text-slate-500">
                     <span>{tCart("subtotal")}</span>
-                    <span className="text-slate-800 dark:text-slate-200">৳{(subtotal * 120).toFixed(0)}</span>
+                    <span className="text-slate-800 dark:text-slate-200">৳{subtotal.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-slate-500">
                     <span>{t("tax")}</span>
-                    <span className="text-slate-800 dark:text-slate-200">৳{(tax * 120).toFixed(0)}</span>
+                    <span className="text-slate-800 dark:text-slate-200">৳{tax.toFixed(0)}</span>
                   </div>
                   <div className="flex justify-between text-base font-extrabold border-t border-border/40 pt-3">
                     <span className="text-slate-800 dark:text-white">{t("total")}</span>
-                    <span className="text-[#e2136e]">৳{(total * 120).toFixed(0)}</span>
+                    <span className="text-[#e2136e]">৳{total.toFixed(0)}</span>
                   </div>
                 </div>
 

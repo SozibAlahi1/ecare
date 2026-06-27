@@ -573,11 +573,11 @@ export default function AdminProductsPage() {
               {/* Shared Product Details - always visible for both internal and external products */}
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-4 border-t border-slate-200 dark:border-slate-800/60 pt-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500">Price ($ USD)</label>
+                  <label className="text-[10px] font-bold text-slate-500">Price (BDT)</label>
                   <Input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-bold text-slate-500">Support Price/mo</label>
+                  <label className="text-[10px] font-bold text-slate-500">Support Price/mo (BDT)</label>
                   <Input type="number" value={supportPrice} onChange={(e) => setSupportPrice(Number(e.target.value))} />
                 </div>
                 <div className="space-y-1">

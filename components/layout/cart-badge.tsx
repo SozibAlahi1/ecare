@@ -130,7 +130,7 @@ export default function CartBadge() {
                             </button>
                           </div>
                           <span className="text-xs font-extrabold text-slate-800 dark:text-white">
-                            ৳{(itemPrice * item.quantity * 120).toFixed(0)}
+                            ৳{(itemPrice * item.quantity).toFixed(0)}
                           </span>
                         </div>
                       </div>
@@ -150,7 +150,7 @@ export default function CartBadge() {
                 <div className="flex justify-between items-center text-sm">
                   <span className="font-medium text-slate-500">{t("subtotal")}</span>
                   <span className="font-extrabold text-slate-800 dark:text-white text-base">
-                    ৳{(subtotal * 120).toFixed(0)}
+                    ৳{subtotal.toFixed(0)}
                   </span>
                 </div>
                 <Button

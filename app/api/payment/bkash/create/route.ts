@@ -21,8 +21,7 @@ export async function POST(request: NextRequest) {
       return acc + price * Number(item.quantity);
     }, 0);
     const tax = subtotal * 0.15;
-    const totalAmountUSD = subtotal + tax;
-    const amountBDT = Math.round(totalAmountUSD * 120);
+    const amountBDT = Math.round(subtotal + tax);
 
     await dbConnect();
     const dbSettingsDoc = await Page.findOne({ key: "bkash_settings" });
