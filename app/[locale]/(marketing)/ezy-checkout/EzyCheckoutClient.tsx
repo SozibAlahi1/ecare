@@ -236,7 +236,7 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
             
             {/* Section Headers */}
             <div className="text-center space-y-3 mb-16">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-wider shadow-sm">
+              <span className="inline-block px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-wider">
                 {initialData?.featuresBadge || t("uniqueFeatures")}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
@@ -250,8 +250,8 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
                   key={i}
                   className="flex flex-col items-start text-left border-l border-slate-200 dark:border-slate-800/60 pl-6 lg:pl-8 transition-all duration-300 group"
                 >
-                  {/* Premium Styled Icon Box at the top left matching theme color */}
-                  <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-[0_8px_20px_var(--color-primary)] opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300">
+                  {/* Premium Styled Icon Box at the top left matching theme color (no shadow) */}
+                  <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300">
                     <feature.icon className="w-5.5 h-5.5 stroke-[1.8]" />
                   </div>
 
