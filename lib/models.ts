@@ -81,6 +81,7 @@ const PortfolioSchema = new Schema(
     demoUrl: { type: String, default: "/services" },
     videoUrl: { type: String, default: "" },
     icon: { type: String },
+    downloadFile: { type: String },
     productType: { type: String, enum: ["internal", "external"], default: "external" },
     translationGroupId: { type: String },
   },

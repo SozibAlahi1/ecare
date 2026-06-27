@@ -27,6 +27,7 @@ interface PortfolioItem {
   demoUrl?: string;
   videoUrl?: string;
   icon?: string;
+  downloadFile?: string;
   productType?: "internal" | "external";
   translationGroupId?: string;
 }
@@ -39,6 +40,7 @@ interface PortfolioGroup {
   cover: string;
   gallery: string[];
   caseStudy?: string;
+  downloadFile?: string;
   price?: number;
   supportPrice?: number;
   sales?: number;
@@ -74,6 +76,7 @@ export default function AdminProductsPage() {
   const [demoUrl, setDemoUrl] = useState<string>("/services");
   const [videoUrl, setVideoUrl] = useState<string>("");
   const [icon, setIcon] = useState("");
+  const [downloadFile, setDownloadFile] = useState("");
   const [productType, setProductType] = useState<"internal" | "external">("external");
   const [typeSelected, setTypeSelected] = useState(false);
   const [gallery, setGallery] = useState<string[]>([]);
@@ -301,6 +304,7 @@ export default function AdminProductsPage() {
     setDemoUrl("/services");
     setVideoUrl("");
     setIcon("");
+    setDownloadFile("");
     setProductType("external");
     setTypeSelected(false);
     setGallery([]);
@@ -357,6 +361,7 @@ export default function AdminProductsPage() {
     setDemoUrl(group.demoUrl || "/services");
     setVideoUrl(group.videoUrl || "");
     setIcon(group.icon || "");
+    setDownloadFile(group.downloadFile || "");
     setProductType(group.productType || "external");
     setTypeSelected(true);
 
@@ -401,6 +406,7 @@ export default function AdminProductsPage() {
       demoUrl,
       videoUrl,
       icon,
+      downloadFile,
       productType,
       en: null,
       bn: null,
@@ -594,7 +600,7 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              {/* Links & Video URL */}
+              {/* Links & Video URL & Downloadable Plugin ZIP */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 border-t border-slate-200 dark:border-slate-800/60 pt-4">
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Demo/External URL</label>
@@ -607,9 +613,16 @@ export default function AdminProductsPage() {
                     <ImageUploader value={icon} onChange={setIcon} />
                   </div>
                 </div>
-                <div className="space-y-1.5 md:col-span-2">
+                <div className="space-y-1.5">
                   <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Intro/Loop Video (Muted Auto-Play)</label>
                   <Input value={videoUrl} onChange={(e) => setVideoUrl(e.target.value)} placeholder="YouTube / Shorts URL" />
+                </div>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Downloadable Plugin File (ZIP)</label>
+                  <div className="flex gap-2 items-center">
+                    <Input value={downloadFile} onChange={(e) => setDownloadFile(e.target.value)} placeholder="Plugin file path or upload" className="flex-1" />
+                    <ImageUploader value={downloadFile} onChange={setDownloadFile} />
+                  </div>
                 </div>
               </div>
             </div>
