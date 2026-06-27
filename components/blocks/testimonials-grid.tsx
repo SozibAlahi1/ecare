@@ -55,7 +55,7 @@ export default function TestimonialsGrid({ testimonials }: TestimonialsGridProps
                       src={
                         isPlaying
                           ? `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=1&playsinline=1&modestbranding=1&rel=0`
-                          : `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&controls=0&playsinline=1&modestbranding=1&rel=0`
+                          : `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&playsinline=1&modestbranding=1&rel=0`
                       }
                       className={`w-full h-full border-none ${isPlaying ? "" : "pointer-events-none"}`}
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
