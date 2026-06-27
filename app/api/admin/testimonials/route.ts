@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       en = {
         author: "Video Review",
         company: "YouTube",
-        quote: ""
+        quote: "Video Review"
       };
     }
 
@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       bn = {
         author: "ভিডিও রিভিউ",
         company: "ইউটিউব",
-        quote: ""
+        quote: "Video Review"
       };
     }
 
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
       const testimonialEn = await Testimonial.create({
         author: en.author,
         company: en.company,
-        quote: en.quote || "",
+        quote: en.quote || "Video Review",
         logo: logo || "",
         avatar: avatar || "",
         rating: rating || 5,
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       const testimonialBn = await Testimonial.create({
         author: bn.author,
         company: bn.company,
-        quote: bn.quote || "",
+        quote: bn.quote || "Video Review",
         logo: logo || "",
         avatar: avatar || "",
         rating: rating || 5,

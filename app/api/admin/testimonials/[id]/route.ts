@@ -61,7 +61,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         await Testimonial.findByIdAndUpdate(existingEn._id, {
           author: en.author,
           company: en.company,
-          quote: en.quote,
+          quote: en.quote || "Video Review",
           logo: logo || "",
           avatar: avatar || "",
           rating: rating || 5,
@@ -71,7 +71,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         await Testimonial.create({
           author: en.author,
           company: en.company,
-          quote: en.quote,
+          quote: en.quote || "Video Review",
           logo: logo || "",
           avatar: avatar || "",
           rating: rating || 5,
@@ -91,7 +91,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         await Testimonial.findByIdAndUpdate(existingBn._id, {
           author: bn.author,
           company: bn.company,
-          quote: bn.quote,
+          quote: bn.quote || "Video Review",
           logo: logo || "",
           avatar: avatar || "",
           rating: rating || 5,
@@ -101,7 +101,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         await Testimonial.create({
           author: bn.author,
           company: bn.company,
-          quote: bn.quote,
+          quote: bn.quote || "Video Review",
           logo: logo || "",
           avatar: avatar || "",
           rating: rating || 5,
