@@ -50,7 +50,8 @@ export default async function Header() {
   let dbProducts: any[] = [];
   try {
     await dbConnect();
-    dbProducts = await Portfolio.find({ locale: locale as "en" | "bn" }).sort({ createdAt: 1 }).lean();
+    const rawProducts = await Portfolio.find({ locale: locale as "en" | "bn" }).sort({ createdAt: 1 }).lean();
+    dbProducts = JSON.parse(JSON.stringify(rawProducts));
   } catch (err) {
     console.error("Failed to load header products from DB:", err);
   }
@@ -142,7 +143,7 @@ export default async function Header() {
                           if (iconVal.startsWith("/") || iconVal.startsWith("http")) {
                             return (
                               <div className="h-9 w-9 rounded-full bg-slate-100 dark:bg-slate-800/60 flex items-center justify-center overflow-hidden shrink-0 border border-slate-200 dark:border-slate-800">
-                                <img src={iconVal} alt={prod.title} className="w-5.5 h-5.5 object-contain" />
+                                <img src={iconVal} alt={prod.title} className="w-full h-full object-cover" />
                               </div>
                             );
                           }

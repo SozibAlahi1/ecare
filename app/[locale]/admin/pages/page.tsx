@@ -77,6 +77,10 @@ interface EzyCheckoutFields {
   aboutTitle: string;
   aboutImage: string;
 
+  // Services Section Header
+  servicesBadge: string;
+  servicesTitle: string;
+
   // Feature Details (Section 3)
   sec3Badge: string;
   sec3Title: string;
@@ -244,6 +248,7 @@ export default function AdminPagesPage() {
     heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
     featuresBadge: "", featuresTitle: "", featuresList: [],
     aboutBadge: "", aboutTitle: "", aboutImage: "",
+    servicesBadge: "", servicesTitle: "",
     sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
     sec4Badge: "", sec4Title: "", sec4Desc: "", sec4Point1: "", sec4Point2: "", sec4Point3: "", sec4CtaText: "", sec4Image: "",
     sec5Badge: "", sec5Title: "", sec5Desc: "", sec5Point1: "", sec5Point2: "", sec5Point3: "", sec5CtaText: "", sec5Image: "",
@@ -256,6 +261,7 @@ export default function AdminPagesPage() {
     heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
     featuresBadge: "", featuresTitle: "", featuresList: [],
     aboutBadge: "", aboutTitle: "", aboutImage: "",
+    servicesBadge: "", servicesTitle: "",
     sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
     sec4Badge: "", sec4Title: "", sec4Desc: "", sec4Point1: "", sec4Point2: "", sec4Point3: "", sec4CtaText: "", sec4Image: "",
     sec5Badge: "", sec5Title: "", sec5Desc: "", sec5Point1: "", sec5Point2: "", sec5Point3: "", sec5CtaText: "", sec5Image: "",
@@ -390,6 +396,8 @@ export default function AdminPagesPage() {
           aboutBadge: parsedEn.aboutBadge || "",
           aboutTitle: parsedEn.aboutTitle || "",
           aboutImage: parsedEn.aboutImage || "",
+          servicesBadge: parsedEn.servicesBadge || "",
+          servicesTitle: parsedEn.servicesTitle || "",
           sec3Badge: parsedEn.sec3Badge || "",
           sec3Title: parsedEn.sec3Title || "",
           sec3Desc: parsedEn.sec3Desc || "",
@@ -451,6 +459,8 @@ export default function AdminPagesPage() {
           aboutBadge: parsedBn.aboutBadge || "",
           aboutTitle: parsedBn.aboutTitle || "",
           aboutImage: parsedBn.aboutImage || "",
+          servicesBadge: parsedBn.servicesBadge || "",
+          servicesTitle: parsedBn.servicesTitle || "",
           sec3Badge: parsedBn.sec3Badge || "",
           sec3Title: parsedBn.sec3Title || "",
           sec3Desc: parsedBn.sec3Desc || "",
@@ -504,6 +514,7 @@ export default function AdminPagesPage() {
           heroBadge: "", heroTitle: "", heroSub: "", heroCtaText: "", heroImage: "",
           featuresBadge: "", featuresTitle: "", featuresList: [],
           aboutBadge: "", aboutTitle: "", aboutImage: "",
+          servicesBadge: "", servicesTitle: "",
           sec3Badge: "", sec3Title: "", sec3Desc: "", sec3Feature1Title: "", sec3Feature1Desc: "", sec3Feature2Title: "", sec3Feature2Desc: "", sec3CtaText: "", sec3Image: "",
           sec4Badge: "", sec4Title: "", sec4Desc: "", sec4Point1: "", sec4Point2: "", sec4Point3: "", sec4CtaText: "", sec4Image: "",
           sec5Badge: "", sec5Title: "", sec5Desc: "", sec5Point1: "", sec5Point2: "", sec5Point3: "", sec5CtaText: "", sec5Image: "",
@@ -1169,6 +1180,40 @@ export default function AdminPagesPage() {
                     {/* Section 3: Popup Checkout */}
                     <div>
                       <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 1</h4>
+                      
+                      {/* Services section main header */}
+                      <div className="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl mb-6 border border-border/50">
+                        <h5 className="text-xs font-bold text-slate-600 dark:text-slate-400 mb-4 uppercase tracking-wider">Section Title & Badge (Services)</h5>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          <div className="space-y-4">
+                            <h6 className="text-[10px] font-black text-slate-400 uppercase">English Header</h6>
+                            <div className="space-y-2">
+                              <div className="space-y-1">
+                                <label className="text-xs font-semibold text-slate-500">Services Badge</label>
+                                <Input value={ezyCheckoutEn.servicesBadge} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, servicesBadge: e.target.value })} placeholder="e.g. Services" />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-xs font-semibold text-slate-500">Services Heading</label>
+                                <Input value={ezyCheckoutEn.servicesTitle} onChange={(e) => setEzyCheckoutEn({ ...ezyCheckoutEn, servicesTitle: e.target.value })} placeholder="e.g. Premium services of our application" />
+                              </div>
+                            </div>
+                          </div>
+                          <div className="space-y-4">
+                            <h6 className="text-[10px] font-black text-slate-400 uppercase">Bengali Header</h6>
+                            <div className="space-y-2">
+                              <div className="space-y-1">
+                                <label className="text-xs font-semibold text-slate-500">Services Badge (Bengali)</label>
+                                <Input value={ezyCheckoutBn.servicesBadge} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, servicesBadge: e.target.value })} placeholder="e.g. সার্ভিস সমূহ" />
+                              </div>
+                              <div className="space-y-1">
+                                <label className="text-xs font-semibold text-slate-500">Services Heading (Bengali)</label>
+                                <Input value={ezyCheckoutBn.servicesTitle} onChange={(e) => setEzyCheckoutBn({ ...ezyCheckoutBn, servicesTitle: e.target.value })} placeholder="e.g. আমাদের অ্যাপ্লিকেশনের প্রিমিয়াম সার্ভিস সমূহ" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>

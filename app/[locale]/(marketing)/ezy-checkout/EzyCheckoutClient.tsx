@@ -197,7 +197,7 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               asChild
               className="px-8 h-13 rounded-2xl bg-primary hover:bg-primary-hover text-white font-bold uppercase tracking-wider text-xs shadow-lg hover:shadow-primary/30 transition-all flex items-center gap-2 cursor-pointer active:scale-95"
             >
-              <a href="#">
+              <a href={initialData?.heroCtaUrl || "https://wordpress.org/plugins/ezy-checkout/"} target="_blank" rel="noopener noreferrer">
                 <Play className="w-4 h-4 fill-white" />
                 {initialData?.heroCtaText || t("livePreview")}
               </a>
@@ -355,10 +355,10 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto space-y-4 mb-20 flex flex-col items-center">
             <span className="inline-flex items-center justify-center px-4 py-1 rounded-full bg-primary text-white text-xs font-semibold tracking-wide">
-              {t("servicesTab")}
+              {initialData?.servicesBadge || t("servicesTab")}
             </span>
             <h2 className="text-4xl sm:text-5xl font-black text-slate-800 dark:text-white leading-[1.15] tracking-tight">
-              {t("premiumServicesHeader")}
+              {initialData?.servicesTitle || t("premiumServicesHeader")}
             </h2>
           </div>
  

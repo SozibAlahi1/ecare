@@ -233,7 +233,7 @@ export default function MobileMenu({ items, dbProducts = [] }: MobileMenuProps) 
                               return <IconComp className="w-5 h-5" />;
                             }
                             if (iconVal.startsWith("/") || iconVal.startsWith("http")) {
-                              return <img src={iconVal} alt="" className="w-6 h-6 object-contain" />;
+                              return <img src={iconVal} alt="" className="w-full h-full object-cover" />;
                             }
                             const lookupKey = iconVal.charAt(0).toUpperCase() + iconVal.slice(1);
                             const IconComponent = (LucideIcons as any)[lookupKey] || (LucideIcons as any)[iconVal] || Store;
