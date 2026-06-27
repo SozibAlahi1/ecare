@@ -228,7 +228,7 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
       {/* 2. Key Features Showcase Grid */}
       <section className="py-24 bg-[#f4f7fc] dark:bg-[#0a0f1d] text-slate-800 dark:text-white relative transition-colors duration-300 border-b border-slate-200/50 dark:border-slate-800/40">
         {/* Glow effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-primary/5 blur-[100px] rounded-full pointer-events-none" />
         
         <Container className="relative z-10">
           
@@ -236,7 +236,7 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
             
             {/* Section Headers */}
             <div className="text-center space-y-3 mb-16">
-              <span className="inline-block px-3 py-1 rounded-full bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider shadow-sm">
+              <span className="inline-block px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-black uppercase tracking-wider shadow-sm">
                 {initialData?.featuresBadge || t("uniqueFeatures")}
               </span>
               <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white leading-tight">
@@ -250,15 +250,15 @@ export default function EzyCheckoutClient({ initialData, dbProduct }: { initialD
                   key={i}
                   className="flex flex-col items-start text-left border-l border-slate-200 dark:border-slate-800/60 pl-6 lg:pl-8 transition-all duration-300 group"
                 >
-                  {/* Premium Styled Icon Box at the top left matching user image */}
-                  <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-[0_8px_20px_rgba(37,99,235,0.35)] group-hover:scale-105 transition-all duration-300">
+                  {/* Premium Styled Icon Box at the top left matching theme color */}
+                  <div className="w-12 h-12 rounded-2xl bg-primary text-primary-foreground flex items-center justify-center shadow-[0_8px_20px_var(--color-primary)] opacity-95 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300">
                     <feature.icon className="w-5.5 h-5.5 stroke-[1.8]" />
                   </div>
 
                   {/* Horizontal line divider under the icon */}
                   <div className="w-full border-t border-slate-200 dark:border-slate-800/60 my-6" />
 
-                  <h3 className="font-bold text-xl text-slate-900 dark:text-white mb-3 tracking-tight group-hover:text-blue-600 transition-colors duration-200">
+                  <h3 className="font-bold text-xl text-slate-900 dark:text-white mb-3 tracking-tight group-hover:text-primary transition-colors duration-200">
                     {feature.title}
                   </h3>
                   <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
