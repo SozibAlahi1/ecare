@@ -1168,7 +1168,7 @@ export default function AdminPagesPage() {
                   <div className="space-y-12">
                     {/* Section 3: Popup Checkout */}
                     <div>
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 1: Popup Checkout</h4>
+                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 1</h4>
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>
@@ -1274,7 +1274,7 @@ export default function AdminPagesPage() {
  
                     {/* Section 4: Project Management */}
                     <div className="border-t border-dashed border-border pt-8">
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 2: Project Management</h4>
+                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 2</h4>
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>
@@ -1372,7 +1372,7 @@ export default function AdminPagesPage() {
  
                     {/* Section 5: Transaction History */}
                     <div className="border-t border-dashed border-border pt-8">
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 3: Transaction History</h4>
+                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 3</h4>
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>
