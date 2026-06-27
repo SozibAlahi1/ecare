@@ -39,13 +39,13 @@ export async function POST(request: NextRequest) {
 
     // Create English version
     if (en && en.author) {
-      if (!en.company || !en.quote) {
-        return NextResponse.json({ success: false, error: "English version requires author, company, and quote" }, { status: 400 });
+      if (!en.company) {
+        return NextResponse.json({ success: false, error: "English version requires author and company" }, { status: 400 });
       }
       const testimonialEn = await Testimonial.create({
         author: en.author,
         company: en.company,
-        quote: en.quote,
+        quote: en.quote || "",
         logo: logo || "",
         avatar: avatar || "",
         rating: rating || 5,
@@ -58,13 +58,13 @@ export async function POST(request: NextRequest) {
 
     // Create Bengali version
     if (bn && bn.author) {
-      if (!bn.company || !bn.quote) {
-        return NextResponse.json({ success: false, error: "Bengali version requires author, company, and quote" }, { status: 400 });
+      if (!bn.company) {
+        return NextResponse.json({ success: false, error: "Bengali version requires author and company" }, { status: 400 });
       }
       const testimonialBn = await Testimonial.create({
         author: bn.author,
         company: bn.company,
-        quote: bn.quote,
+        quote: bn.quote || "",
         logo: logo || "",
         avatar: avatar || "",
         rating: rating || 5,

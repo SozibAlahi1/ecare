@@ -294,147 +294,27 @@ export default function AdminTestimonialsPage() {
           </h2>
 
           <form onSubmit={handleSave} className="space-y-6">
-            {/* Shared Fields */}
             <div className="bg-slate-50 dark:bg-slate-800/40 border border-border/40 p-5 rounded-2xl">
-              <h3 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider mb-4">Shared Metadata</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Avatar */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400">User Avatar</label>
-                  <div className="flex gap-2 items-center">
-                    <Input
-                      value={avatar}
-                      onChange={(e) => setAvatar(e.target.value)}
-                      placeholder="Avatar image URL"
-                      className="flex-1"
-                    />
-                    <ImageUploader value={avatar} onChange={setAvatar} />
-                  </div>
-                </div>
-
-                {/* Company Logo */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Company Logo (Optional)</label>
-                  <div className="flex gap-2 items-center">
-                    <Input
-                      value={logo}
-                      onChange={(e) => setLogo(e.target.value)}
-                      placeholder="Company logo URL"
-                      className="flex-1"
-                    />
-                    <ImageUploader value={logo} onChange={setLogo} />
-                  </div>
-                </div>
-
-                {/* Rating & Video URL */}
-                <div className="grid grid-cols-2 gap-3">
-                  <Dropdown
-                    label="Rating (1-5)"
-                    value={rating}
-                    onChange={(val) => setRating(parseInt(val))}
-                  >
-                    <option value="5">5 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="2">2 Stars</option>
-                    <option value="1">1 Star</option>
-                  </Dropdown>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Video Embed URL</label>
-                    <Input
-                      value={videoUrl}
-                      onChange={(e) => setVideoUrl(e.target.value)}
-                      placeholder="e.g. YouTube Shorts URL"
-                    />
-                  </div>
-                </div>
+              <div className="space-y-2">
+                <label className="text-sm font-bold text-slate-700 dark:text-slate-300">Video Embed URL</label>
+                <Input
+                  required
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  placeholder="e.g. https://www.youtube.com/shorts/fXxUYb0s-pc"
+                  className="w-full text-sm bg-white dark:bg-slate-900"
+                />
+                <p className="text-xs text-slate-400 font-medium">Please enter a valid YouTube/Shorts video link. This video will automatically display across both English and Bengali versions of the site.</p>
               </div>
             </div>
 
             {/* Language Tab Selector */}
-            <div className="flex border-b border-slate-200 dark:border-slate-800">
-              <button
-                type="button"
-                onClick={() => setActiveTab("en")}
-                className={`py-2.5 px-5 font-semibold text-sm border-b-2 transition-colors cursor-pointer ${
-                  activeTab === "en"
-                    ? "border-red-600 text-red-600 dark:text-red-500"
-                    : "border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
-                }`}
-              >
-                English Version {authorEn ? "✓" : ""}
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab("bn")}
-                className={`py-2.5 px-5 font-semibold text-sm border-b-2 transition-colors cursor-pointer ${
-                  activeTab === "bn"
-                    ? "border-red-600 text-red-600 dark:text-red-500"
-                    : "border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300"
-                }`}
-              >
-                Bengali Version {authorBn ? "✓" : ""}
-              </button>
-            </div>
-
-            {/* English Version */}
-            {activeTab === "en" && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-600 dark:text-slate-400">English Author Name</label>
-                    <Input
-                      required={!!authorEn || (!authorEn && !authorBn)}
-                      value={authorEn}
-                      onChange={(e) => setAuthorEn(e.target.value)}
-                      placeholder="e.g. Sarah Connor"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-600 dark:text-slate-400">English Company Name</label>
-                    <Input
-                      required={!!authorEn}
-                      value={companyEn}
-                      onChange={(e) => setCompanyEn(e.target.value)}
-                      placeholder="e.g. Cyberdyne Systems"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Bengali Version */}
-            {activeTab === "bn" && (
-              <div className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Bengali Author Name</label>
-                    <Input
-                      value={authorBn}
-                      onChange={(e) => setAuthorBn(e.target.value)}
-                      placeholder="যেমনঃ সারা কোনর"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Bengali Company Name</label>
-                    <Input
-                      required={!!authorBn}
-                      value={companyBn}
-                      onChange={(e) => setCompanyBn(e.target.value)}
-                      placeholder="যেমনঃ সাইবারডাইন সিস্টেমস"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-
             <div className="flex gap-3 justify-end border-t border-slate-200 dark:border-slate-800 pt-4">
               <Button type="button" variant="outline" onClick={resetForm} className="cursor-pointer">
                 Cancel
               </Button>
               <Button type="submit" disabled={saving} className="bg-[#e8000e] hover:bg-[#e8000e]/90 text-white font-bold cursor-pointer">
-                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Testimonial Group"}
+                {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Video Testimonial"}
               </Button>
             </div>
           </form>
