@@ -570,31 +570,29 @@ export default function AdminProductsPage() {
                 </div>
               </div>
 
-              {/* Shared Product Details - conditional depending on Internal Type */}
-              {productType === "internal" && (
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-4 border-t border-slate-200 dark:border-slate-800/60 pt-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500">Price ($ USD)</label>
-                    <Input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500">Support Price/mo</label>
-                    <Input type="number" value={supportPrice} onChange={(e) => setSupportPrice(Number(e.target.value))} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500">Demo Sales Count</label>
-                    <Input type="number" value={sales} onChange={(e) => setSales(Number(e.target.value))} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500">Rating Stars</label>
-                    <Input type="number" step="0.1" value={rating} onChange={(e) => setRating(Number(e.target.value))} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold text-slate-500">Ratings Count</label>
-                    <Input type="number" value={ratingsCount} onChange={(e) => setRatingsCount(Number(e.target.value))} />
-                  </div>
+              {/* Shared Product Details - always visible for both internal and external products */}
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mt-4 border-t border-slate-200 dark:border-slate-800/60 pt-4">
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500">Price ($ USD)</label>
+                  <Input type="number" value={price} onChange={(e) => setPrice(Number(e.target.value))} />
                 </div>
-              )}
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500">Support Price/mo</label>
+                  <Input type="number" value={supportPrice} onChange={(e) => setSupportPrice(Number(e.target.value))} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500">Demo Sales Count</label>
+                  <Input type="number" value={sales} onChange={(e) => setSales(Number(e.target.value))} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500">Rating Stars</label>
+                  <Input type="number" step="0.1" value={rating} onChange={(e) => setRating(Number(e.target.value))} />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-[10px] font-bold text-slate-500">Ratings Count</label>
+                  <Input type="number" value={ratingsCount} onChange={(e) => setRatingsCount(Number(e.target.value))} />
+                </div>
+              </div>
 
               {/* Links & Video URL */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mt-4 border-t border-slate-200 dark:border-slate-800/60 pt-4">
