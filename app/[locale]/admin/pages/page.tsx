@@ -811,7 +811,7 @@ export default function AdminPagesPage() {
                           : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
                       }`}
                     >
-                      {tab === "faqs" ? "FAQs" : tab}
+                      {tab === "faqs" ? "FAQs" : tab === "overview" ? "Product Showcase" : tab}
                     </button>
                   ))}
                 </div>
