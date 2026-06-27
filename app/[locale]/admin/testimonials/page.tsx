@@ -401,18 +401,6 @@ export default function AdminTestimonialsPage() {
                     />
                   </div>
                 </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400">English Quote</label>
-                  <textarea
-                    required={!!authorEn}
-                    rows={4}
-                    value={quoteEn}
-                    onChange={(e) => setQuoteEn(e.target.value)}
-                    placeholder="Write the quote text..."
-                    className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
-                  />
-                </div>
               </div>
             )}
 
@@ -437,18 +425,6 @@ export default function AdminTestimonialsPage() {
                       placeholder="যেমনঃ সাইবারডাইন সিস্টেমস"
                     />
                   </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-600 dark:text-slate-400">Bengali Quote</label>
-                  <textarea
-                    required={!!authorBn}
-                    rows={4}
-                    value={quoteBn}
-                    onChange={(e) => setQuoteBn(e.target.value)}
-                    placeholder="প্রশংসাসূচক উক্তিটি বাংলায় লিখুন..."
-                    className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
-                  />
                 </div>
               </div>
             )}
@@ -482,7 +458,7 @@ export default function AdminTestimonialsPage() {
               <thead>
                 <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50">
                   <th className="p-4 text-xs font-bold text-slate-500 uppercase">User</th>
-                  <th className="p-4 text-xs font-bold text-slate-500 uppercase">Quote Content</th>
+                  <th className="p-4 text-xs font-bold text-slate-500 uppercase">Video URL</th>
                   <th className="p-4 text-xs font-bold text-slate-500 uppercase">Rating</th>
                   <th className="p-4 text-xs font-bold text-slate-500 uppercase">Languages</th>
                   <th className="p-4 text-xs font-bold text-slate-500 uppercase text-right">Actions</th>
@@ -517,12 +493,9 @@ export default function AdminTestimonialsPage() {
                         </div>
                       </td>
                       <td className="p-4 max-w-xs md:max-w-md">
-                        {group.en && (
-                          <div className="text-xs text-slate-600 dark:text-slate-400 line-clamp-1">" {group.en.quote} "</div>
-                        )}
-                        {group.bn && (
-                          <div className="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 italic mt-0.5">" {group.bn.quote} "</div>
-                        )}
+                        <div className="text-xs font-mono text-slate-500 truncate" title={group.videoUrl || ""}>
+                          {group.videoUrl || "No Video URL"}
+                        </div>
                       </td>
                       <td className="p-4">
                         <div className="flex gap-0.5 text-amber-500 items-center">
