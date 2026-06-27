@@ -653,8 +653,12 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               
               {/* Manual Left/Right navigation buttons overlay */}
               <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <Button 
-                  onClick={() => scrollToShortPage(Math.max(0, Math.floor(activeShortIdx / 2) - 1))}
+                 <Button 
+                  onClick={() => {
+                    const currentPage = Math.floor(activeShortIdx / 2);
+                    const prevPage = currentPage === 0 ? 2 : currentPage - 1;
+                    scrollToShortPage(prevPage);
+                  }}
                   className="w-10 h-10 rounded-full bg-white dark:bg-slate-950 text-slate-800 dark:text-white hover:bg-slate-50 border border-slate-200 dark:border-slate-800/80 shadow-md flex items-center justify-center p-0 cursor-pointer active:scale-90"
                 >
                   <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
@@ -662,7 +666,11 @@ export default function EzyCheckoutClient({ initialData }: { initialData?: any }
               </div>
               <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <Button 
-                  onClick={() => scrollToShortPage(Math.min(1, Math.floor(activeShortIdx / 2) + 1))}
+                  onClick={() => {
+                    const currentPage = Math.floor(activeShortIdx / 2);
+                    const nextPage = (currentPage + 1) % 3;
+                    scrollToShortPage(nextPage);
+                  }}
                   className="w-10 h-10 rounded-full bg-white dark:bg-slate-950 text-slate-800 dark:text-white hover:bg-slate-50 border border-slate-200 dark:border-slate-800/80 shadow-md flex items-center justify-center p-0 cursor-pointer active:scale-90"
                 >
                   <ChevronRight className="w-5 h-5 stroke-[2.5]" />
