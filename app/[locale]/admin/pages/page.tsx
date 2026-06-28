@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader2, FileText, Check, AlertTriangle, Phone, Mail, MapPin, Clock, Plus, Trash2, ArrowUp, ArrowDown } from "lucide-react";
+import { Loader2, FileText, Check, AlertTriangle, Phone, Mail, MapPin, Clock, Plus, Trash2, ArrowUp, ArrowDown, ChevronDown, ChevronRight } from "lucide-react";
 import { Dropdown } from "@/components/ui/dropdown";
 
 interface SolutionFormItem {
@@ -310,6 +310,9 @@ export default function AdminPagesPage() {
   });
 
   const [ezyTab, setEzyTab] = useState("hero");
+  const [showcase1Expanded, setShowcase1Expanded] = useState(false);
+  const [showcase2Expanded, setShowcase2Expanded] = useState(false);
+  const [showcase3Expanded, setShowcase3Expanded] = useState(false);
 
   // Form Fields for About page (structured JSON)
   const [aboutEn, setAboutEn] = useState<AboutFields>(defaultAboutEn);
@@ -1307,8 +1310,22 @@ export default function AdminPagesPage() {
                 {ezyTab === "features2" && (
                   <div className="space-y-12">
                     {/* Section 3: Popup Checkout */}
-                    <div>
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 1</h4>
+                    <div className="border border-border/60 dark:border-border/40 rounded-xl p-4 sm:p-6 bg-slate-50/30 dark:bg-slate-900/10 mb-6">
+                      <button
+                        type="button"
+                        onClick={() => setShowcase1Expanded(!showcase1Expanded)}
+                        className="w-full flex items-center justify-between font-black text-slate-800 dark:text-white border-b border-border pb-3 uppercase tracking-wider cursor-pointer hover:text-primary transition-colors text-left"
+                      >
+                        <span className="text-sm">Showcase Section 1</span>
+                        {showcase1Expanded ? (
+                          <ChevronDown className="w-5 h-5 text-slate-500" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-slate-500" />
+                        )}
+                      </button>
+                      
+                      {showcase1Expanded && (
+                        <div className="mt-6 space-y-6">
                       
                       {/* Services section main header */}
                       <div className="bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl mb-6 border border-border/50">
@@ -1444,11 +1461,27 @@ export default function AdminPagesPage() {
                           </div>
                         </div>
                       </div>
+                        </div>
+                      )}
                     </div>
  
                     {/* Section 4: Project Management */}
-                    <div className="border-t border-dashed border-border pt-8">
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 2</h4>
+                    <div className="border border-border/60 dark:border-border/40 rounded-xl p-4 sm:p-6 bg-slate-50/30 dark:bg-slate-900/10 mb-6">
+                      <button
+                        type="button"
+                        onClick={() => setShowcase2Expanded(!showcase2Expanded)}
+                        className="w-full flex items-center justify-between font-black text-slate-800 dark:text-white border-b border-border pb-3 uppercase tracking-wider cursor-pointer hover:text-primary transition-colors text-left"
+                      >
+                        <span className="text-sm">Showcase Section 2</span>
+                        {showcase2Expanded ? (
+                          <ChevronDown className="w-5 h-5 text-slate-500" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-slate-500" />
+                        )}
+                      </button>
+                      
+                      {showcase2Expanded && (
+                        <div className="mt-6 space-y-6">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>
@@ -1542,11 +1575,27 @@ export default function AdminPagesPage() {
                           </div>
                         </div>
                       </div>
+                        </div>
+                      )}
                     </div>
  
                     {/* Section 5: Transaction History */}
-                    <div className="border-t border-dashed border-border pt-8">
-                      <h4 className="text-sm font-black text-slate-800 dark:text-white border-b border-border pb-2 mb-6 uppercase tracking-wider">Showcase Section 3</h4>
+                    <div className="border border-border/60 dark:border-border/40 rounded-xl p-4 sm:p-6 bg-slate-50/30 dark:bg-slate-900/10 mb-6">
+                      <button
+                        type="button"
+                        onClick={() => setShowcase3Expanded(!showcase3Expanded)}
+                        className="w-full flex items-center justify-between font-black text-slate-800 dark:text-white border-b border-border pb-3 uppercase tracking-wider cursor-pointer hover:text-primary transition-colors text-left"
+                      >
+                        <span className="text-sm">Showcase Section 3</span>
+                        {showcase3Expanded ? (
+                          <ChevronDown className="w-5 h-5 text-slate-500" />
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-slate-500" />
+                        )}
+                      </button>
+                      
+                      {showcase3Expanded && (
+                        <div className="mt-6 space-y-6">
                       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="space-y-4">
                           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">English Details</h3>
@@ -1640,6 +1689,8 @@ export default function AdminPagesPage() {
                           </div>
                         </div>
                       </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 )}
