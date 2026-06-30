@@ -11,10 +11,8 @@ export async function POST(request: NextRequest) {
 
     await dbConnect();
 
-    // 1. Seed Pages if empty
-    const pageCount = await Page.countDocuments();
-    if (pageCount === 0) {
-      await Page.insertMany([
+    // 1. Seed Pages
+    const pagesToSeed = [
         {
           key: "home_consulting_cta",
           content: {
@@ -166,7 +164,13 @@ Permission is granted to temporarily download one copy of the materials on Ecare
             ]),
           },
         },
-      ]);
+    ];
+
+    for (const p of pagesToSeed) {
+      const exists = await Page.findOne({ key: p.key });
+      if (!exists) {
+        await Page.create(p);
+      }
     }
 
     // 2. Seed Team if empty
