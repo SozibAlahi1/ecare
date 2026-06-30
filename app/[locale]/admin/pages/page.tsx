@@ -314,6 +314,88 @@ export default function AdminPagesPage() {
   const [showcase2Expanded, setShowcase2Expanded] = useState(false);
   const [showcase3Expanded, setShowcase3Expanded] = useState(false);
 
+  const isLandingPage = (page?: PageItem) => {
+    if (!page || !page.content || !page.content.en) return false;
+    try {
+      const parsed = JSON.parse(page.content.en);
+      return parsed && typeof parsed === "object" && "heroTitle" in parsed;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  const handleDuplicate = async (page: PageItem) => {
+    const newKey = prompt("Enter a unique URL slug/key for the duplicated landing page (e.g. ezy-checkout-offer):");
+    if (!newKey) return;
+
+    // Validate key format (alphanumeric, hyphens, underscores)
+    const keyRegex = /^[a-z0-9-_]+$/i;
+    if (!keyRegex.test(newKey)) {
+      alert("Invalid key format. Only alphanumeric characters, hyphens, and underscores are allowed.");
+      return;
+    }
+
+    const CORE_PAGES = ["ezy_checkout", "about", "terms", "privacy", "contact_info", "bkash_settings", "smtp_settings", "home_solutions", "home_at_glance", "offer_popup"];
+    if (CORE_PAGES.includes(newKey.toLowerCase())) {
+      alert("This key is reserved for system pages. Please choose a different key.");
+      return;
+    }
+
+    setSaving(true);
+    try {
+      const res = await fetch("/api/admin/pages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          key: newKey.toLowerCase(),
+          content: {
+            en: page.content.en,
+            bn: page.content.bn
+          }
+        })
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to duplicate page");
+      }
+
+      setSuccess(`Page duplicated successfully as "${newKey.toLowerCase()}"!`);
+      fetchPages();
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
+      setError(err.message);
+      setTimeout(() => setError(""), 4000);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDelete = async (page: PageItem) => {
+    if (!confirm(`Are you sure you want to delete the duplicated landing page "${page.key}"?`)) return;
+
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/pages/${page.key}`, {
+        method: "DELETE"
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to delete page");
+      }
+
+      setSuccess(`Page "${page.key}" deleted successfully!`);
+      fetchPages();
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
+      setError(err.message);
+      setTimeout(() => setError(""), 4000);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   // Form Fields for About page (structured JSON)
   const [aboutEn, setAboutEn] = useState<AboutFields>(defaultAboutEn);
   const [aboutBn, setAboutBn] = useState<AboutFields>(defaultAboutBn);
@@ -446,7 +528,7 @@ export default function AdminPagesPage() {
         setOfferEn({ title: "", subtitle: "", discountPercent: "", discountCode: "", isActive: "true" });
         setOfferBn({ title: "", subtitle: "", discountPercent: "", discountCode: "", isActive: "true" });
       }
-    } else if (page.key === "ezy_checkout") {
+    } else if (page.key === "ezy_checkout" || isLandingPage(page)) {
       try {
         const parsedEn = JSON.parse(page.content.en || "{}");
         const parsedBn = JSON.parse(page.content.bn || "{}");
@@ -717,7 +799,7 @@ export default function AdminPagesPage() {
       if (selectedKey === "offer_popup") {
         return JSON.stringify(lang === "en" ? offerEn : offerBn);
       }
-      if (selectedKey === "ezy_checkout") {
+      if (selectedKey === "ezy_checkout" || (pages.find(p => p.key === selectedKey) && isLandingPage(pages.find(p => p.key === selectedKey)))) {
         return JSON.stringify(lang === "en" ? ezyCheckoutEn : ezyCheckoutBn);
       }
       if (selectedKey === "about") {
@@ -1029,7 +1111,7 @@ export default function AdminPagesPage() {
                   </div>
                 </div>
               </div>
-            ) : selectedKey === "ezy_checkout" ? (
+            ) : (selectedKey === "ezy_checkout" || (pages.find(p => p.key === selectedKey) && isLandingPage(pages.find(p => p.key === selectedKey)))) ? (
               <div className="space-y-6">
                 {/* Builder Tabs Navigation */}
                 <div className="flex flex-wrap gap-2 border-b border-border pb-4">
@@ -2823,9 +2905,29 @@ export default function AdminPagesPage() {
                   </p>
                 )}
               </div>
-              <Button onClick={() => handleEdit(page)} className="w-full bg-slate-100 hover:bg-[#e8000e] text-slate-800 hover:text-white dark:bg-slate-800 dark:text-slate-200 font-bold transition-all duration-300 cursor-pointer">
-                Edit Content
-              </Button>
+              <div className="flex flex-col gap-2 mt-4">
+                <Button onClick={() => handleEdit(page)} className="w-full bg-slate-100 hover:bg-[#e8000e] text-slate-800 hover:text-white dark:bg-slate-800 dark:text-slate-200 font-bold transition-all duration-300 cursor-pointer">
+                  Edit Content
+                </Button>
+                <div className="flex gap-2">
+                  {isLandingPage(page) && (
+                    <Button
+                      onClick={() => handleDuplicate(page)}
+                      className="flex-1 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-800/40 text-emerald-800 dark:text-emerald-400 hover:bg-emerald-600 hover:text-white font-bold transition-all duration-300 cursor-pointer"
+                    >
+                      Duplicate
+                    </Button>
+                  )}
+                  {!["ezy_checkout", "about", "terms", "privacy", "contact_info", "bkash_settings", "smtp_settings", "home_solutions", "home_at_glance", "offer_popup"].includes(page.key) && (
+                    <Button
+                      onClick={() => handleDelete(page)}
+                      className="flex-1 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800/40 text-red-600 dark:text-red-400 hover:bg-red-600 hover:text-white font-bold transition-all duration-300 cursor-pointer"
+                    >
+                      Delete
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
