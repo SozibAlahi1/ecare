@@ -1025,6 +1025,130 @@ export default function AdminPagesPage() {
                   <Input value={smtpSettings.adminNoticeEmail} onChange={(e) => setSmtpSettings({ ...smtpSettings, adminNoticeEmail: e.target.value })} placeholder="e.g. sales@ecare.com" />
                 </div>
               </div>
+            ) : selectedKey === "home_consulting_cta" ? (
+              <div className="space-y-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* English Consulting Settings */}
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-border pb-2">English Settings</h3>
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Banner Image URL</label>
+                        <div className="flex gap-2">
+                          <Input value={homeCtaEn.image} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, image: e.target.value })} className="flex-1 text-xs h-9" />
+                          <ImageUploader value={homeCtaEn.image} onChange={(val) => setHomeCtaEn({ ...homeCtaEn, image: val })} />
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Badge / Subtitle Text</label>
+                        <Input value={homeCtaEn.badge} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, badge: e.target.value })} className="text-xs h-9" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Heading Title</label>
+                        <Input value={homeCtaEn.title} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, title: e.target.value })} className="text-xs h-9" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Description</label>
+                        <textarea
+                          rows={3}
+                          value={homeCtaEn.description}
+                          onChange={(e) => setHomeCtaEn({ ...homeCtaEn, description: e.target.value })}
+                          className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Trust / Small Text</label>
+                        <textarea
+                          rows={3}
+                          value={homeCtaEn.trustText}
+                          onChange={(e) => setHomeCtaEn({ ...homeCtaEn, trustText: e.target.value })}
+                          className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 1 Text</label>
+                          <Input value={homeCtaEn.btn1Text} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, btn1Text: e.target.value })} className="text-xs h-9" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 1 Link / URL</label>
+                          <Input value={homeCtaEn.btn1Url} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, btn1Url: e.target.value })} className="text-xs h-9" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 2 Text</label>
+                          <Input value={homeCtaEn.btn2Text} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, btn2Text: e.target.value })} className="text-xs h-9" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 2 Link / URL</label>
+                          <Input value={homeCtaEn.btn2Url} onChange={(e) => setHomeCtaEn({ ...homeCtaEn, btn2Url: e.target.value })} className="text-xs h-9" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bengali Consulting Settings */}
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-bold text-slate-800 dark:text-white border-b border-border pb-2">Bengali Settings</h3>
+                    <div className="space-y-3">
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Banner Image URL</label>
+                        <div className="flex gap-2">
+                          <Input value={homeCtaBn.image} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, image: e.target.value })} className="flex-1 text-xs h-9" />
+                          <ImageUploader value={homeCtaBn.image} onChange={(val) => setHomeCtaBn({ ...homeCtaBn, image: val })} />
+                        </div>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Badge / Subtitle Text</label>
+                        <Input value={homeCtaBn.badge} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, badge: e.target.value })} className="text-xs h-9" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Heading Title</label>
+                        <Input value={homeCtaBn.title} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, title: e.target.value })} className="text-xs h-9" />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Description</label>
+                        <textarea
+                          rows={3}
+                          value={homeCtaBn.description}
+                          onChange={(e) => setHomeCtaBn({ ...homeCtaBn, description: e.target.value })}
+                          className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-xs font-semibold text-slate-500">Trust / Small Text</label>
+                        <textarea
+                          rows={3}
+                          value={homeCtaBn.trustText}
+                          onChange={(e) => setHomeCtaBn({ ...homeCtaBn, trustText: e.target.value })}
+                          className="flex w-full rounded-md border border-border bg-background px-3 py-2 text-xs text-foreground focus-visible:outline-none focus-visible:border-primary resize-y"
+                        />
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 1 Text</label>
+                          <Input value={homeCtaBn.btn1Text} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, btn1Text: e.target.value })} className="text-xs h-9" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 1 Link / URL</label>
+                          <Input value={homeCtaBn.btn1Url} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, btn1Url: e.target.value })} className="text-xs h-9" />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 2 Text</label>
+                          <Input value={homeCtaBn.btn2Text} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, btn2Text: e.target.value })} className="text-xs h-9" />
+                        </div>
+                        <div className="space-y-1">
+                          <label className="text-xs font-semibold text-slate-500">Button 2 Link / URL</label>
+                          <Input value={homeCtaBn.btn2Url} onChange={(e) => setHomeCtaBn({ ...homeCtaBn, btn2Url: e.target.value })} className="text-xs h-9" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ) : selectedKey === "offer_popup" ? (
               <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
