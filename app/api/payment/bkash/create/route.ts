@@ -111,6 +111,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Pre-generate license keys for each item and download token
+    const licenseKeys = items.map(() => 
+      "EZY-PRO-" + 
+      Math.random().toString(36).substring(2, 6).toUpperCase() + "-" + 
+      Math.random().toString(36).substring(2, 6).toUpperCase() + "-" + 
+      Math.random().toString(36).substring(2, 6).toUpperCase()
+    );
+    const downloadToken = "dl-" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
     // Save Pending Order
     await Order.create({
       name: billing.name,
@@ -126,7 +135,9 @@ export async function POST(request: NextRequest) {
       })),
       totalAmount: amountBDT,
       paymentStatus: "pending",
-      paymentID: createData.paymentID
+      paymentID: createData.paymentID,
+      licenseKeys,
+      downloadToken
     });
 
     return NextResponse.json({

@@ -42,10 +42,9 @@ export default function AuthButton() {
     window.dispatchEvent(new Event("ecare_cart_change"));
     router.push("/");
   };
-
   if (user) {
     const isAdmin = user.role === "admin" || user.email?.includes("admin");
-    const dashboardLink = isAdmin ? "/admin/dashboard" : "/admin/dashboard";
+    const dashboardLink = isAdmin ? "/admin/dashboard" : "/dashboard";
 
     return (
       <div 
