@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import { User, LogOut, LayoutDashboard, Settings, Download, LifeBuoy } from "lucide-react";
@@ -15,6 +15,7 @@ export default function AuthButton() {
   const locale = params?.locale || "en";
   const [user, setUser] = useState<any>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const loadUser = () => {
     if (typeof window !== "undefined") {
@@ -28,8 +29,18 @@ export default function AuthButton() {
 
     // Re-check when cart/auth events are dispatched
     window.addEventListener("ecare_cart_change", loadUser);
+    
+    // Close dropdown on click outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       window.removeEventListener("ecare_cart_change", loadUser);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -49,8 +60,7 @@ export default function AuthButton() {
     return (
       <div 
         className="relative"
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
+        ref={dropdownRef}
       >
         <button 
           className="flex items-center justify-center w-9 h-9 rounded-full bg-primary text-white text-xs font-black uppercase select-none border border-primary/20 hover:scale-105 transition-all shadow-md cursor-pointer"

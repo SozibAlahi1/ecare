@@ -260,42 +260,89 @@ export default async function HomePage({ params }: PageProps) {
                         bold: (chunks) => <strong className="text-foreground font-bold">{chunks}</strong>
                       })}
                     </p>
-                    <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4">
-                      <div className="relative h-7 w-20 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer">
-                        <Image
-                          src="/company/Logo-1.png"
-                          alt="Partner 1"
-                          fill
-                          className="object-contain"
-                          sizes="80px"
-                        />
-                      </div>
-                      <div className="relative h-7 w-20 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer">
-                        <Image
-                          src="/company/Logo-2.png"
-                          alt="Partner 2"
-                          fill
-                          className="object-contain"
-                          sizes="80px"
-                        />
-                      </div>
-                      <div className="relative h-7 w-20 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer">
-                        <Image
-                          src="/company/Logo3.png"
-                          alt="Partner 3"
-                          fill
-                          className="object-contain"
-                          sizes="80px"
-                        />
-                      </div>
-                      <div className="relative h-7 w-20 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer">
-                        <Image
-                          src="/company/Logo4.png"
-                          alt="Partner 4"
-                          fill
-                          className="object-contain"
-                          sizes="80px"
-                        />
+                    
+                    {/* CSS styles for the hero-badge-marquee */}
+                    <style dangerouslySetInnerHTML={{ __html: `
+                      @keyframes hero-marquee-slide {
+                        0% {
+                          transform: translateX(0);
+                        }
+                        100% {
+                          transform: translateX(calc(-50% - 0.75rem));
+                        }
+                      }
+                      .hero-marquee-track {
+                        display: flex;
+                        width: max-content;
+                        gap: 1.5rem;
+                        animation: hero-marquee-slide 25s linear infinite;
+                      }
+                      .hero-marquee-track:hover {
+                        animation-play-state: paused;
+                      }
+                    `}} />
+
+                    {/* Marquee Container with fade masks */}
+                    <div className="relative overflow-hidden w-full">
+                      {/* Left and right fade gradients for a premium feel */}
+                      <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white dark:from-[#0c101b] to-transparent z-10 pointer-events-none" />
+                      <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white dark:from-[#0c101b] to-transparent z-10 pointer-events-none" />
+                      
+                      <div className="flex gap-6 overflow-hidden py-1">
+                        <div className="hero-marquee-track">
+                          {/* Original Set */}
+                          {[
+                            { src: "/company/Logo-1.png", alt: "Luxor Cosmetics" },
+                            { src: "/company/Logo-2.png", alt: "Saifex" },
+                            { src: "/company/Logo3.png", alt: "HBCI" },
+                            { src: "/company/Logo4.png", alt: "Nandanik" },
+                            { src: "/company/Logo5.png", alt: "Logo 5" },
+                            { src: "/company/Logo6.png", alt: "Logo 6" },
+                            { src: "/company/Logo7.png", alt: "Logo 7" },
+                            { src: "/company/Logo8.png", alt: "Logo 8" },
+                            { src: "/company/Logo9.png", alt: "Logo 9" },
+                            { src: "/company/Logo10.png", alt: "Logo 10" },
+                            { src: "/company/Logo11.png", alt: "Logo 11" },
+                            { src: "/company/Logo12.png", alt: "Logo 12" },
+                            { src: "/company/Logo13.png", alt: "Logo 13" },
+                          ].map((logo, idx) => (
+                            <div key={`hero-logo-1-${idx}`} className="relative h-7 w-20 flex-shrink-0 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer">
+                              <Image
+                                src={logo.src}
+                                alt={logo.alt}
+                                fill
+                                className="object-contain"
+                                sizes="80px"
+                              />
+                            </div>
+                          ))}
+                          {/* Duplicate Set for Loop */}
+                          {[
+                            { src: "/company/Logo-1.png", alt: "Luxor Cosmetics" },
+                            { src: "/company/Logo-2.png", alt: "Saifex" },
+                            { src: "/company/Logo3.png", alt: "HBCI" },
+                            { src: "/company/Logo4.png", alt: "Nandanik" },
+                            { src: "/company/Logo5.png", alt: "Logo 5" },
+                            { src: "/company/Logo6.png", alt: "Logo 6" },
+                            { src: "/company/Logo7.png", alt: "Logo 7" },
+                            { src: "/company/Logo8.png", alt: "Logo 8" },
+                            { src: "/company/Logo9.png", alt: "Logo 9" },
+                            { src: "/company/Logo10.png", alt: "Logo 10" },
+                            { src: "/company/Logo11.png", alt: "Logo 11" },
+                            { src: "/company/Logo12.png", alt: "Logo 12" },
+                            { src: "/company/Logo13.png", alt: "Logo 13" },
+                          ].map((logo, idx) => (
+                            <div key={`hero-logo-2-${idx}`} className="relative h-7 w-20 flex-shrink-0 filter grayscale dark:invert opacity-70 hover:filter-none hover:opacity-100 transition-all duration-300 cursor-pointer" aria-hidden="true">
+                              <Image
+                                src={logo.src}
+                                alt={logo.alt}
+                                fill
+                                className="object-contain"
+                                sizes="80px"
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
