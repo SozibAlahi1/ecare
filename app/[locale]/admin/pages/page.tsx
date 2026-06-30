@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Loader2, FileText, Check, AlertTriangle, Phone, Mail, MapPin, Clock, Plus, Trash2, ArrowUp, ArrowDown, ChevronDown, ChevronRight } from "lucide-react";
 import { Dropdown } from "@/components/ui/dropdown";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 
 interface SolutionFormItem {
   name: string;
@@ -313,6 +314,9 @@ export default function AdminPagesPage() {
   const [showcase1Expanded, setShowcase1Expanded] = useState(false);
   const [showcase2Expanded, setShowcase2Expanded] = useState(false);
   const [showcase3Expanded, setShowcase3Expanded] = useState(false);
+  const [duplicateTarget, setDuplicateTarget] = useState<PageItem | null>(null);
+  const [newSlug, setNewSlug] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<PageItem | null>(null);
 
   const isLandingPage = (page?: PageItem) => {
     if (!page || !page.content || !page.content.en) return false;
@@ -324,76 +328,13 @@ export default function AdminPagesPage() {
     }
   };
 
-  const handleDuplicate = async (page: PageItem) => {
-    const newKey = prompt("Enter a unique URL slug/key for the duplicated landing page (e.g. ezy-checkout-offer):");
-    if (!newKey) return;
-
-    // Validate key format (alphanumeric, hyphens, underscores)
-    const keyRegex = /^[a-z0-9-_]+$/i;
-    if (!keyRegex.test(newKey)) {
-      alert("Invalid key format. Only alphanumeric characters, hyphens, and underscores are allowed.");
-      return;
-    }
-
-    const CORE_PAGES = ["ezy_checkout", "about", "terms", "privacy", "contact_info", "bkash_settings", "smtp_settings", "home_solutions", "home_at_glance", "offer_popup"];
-    if (CORE_PAGES.includes(newKey.toLowerCase())) {
-      alert("This key is reserved for system pages. Please choose a different key.");
-      return;
-    }
-
-    setSaving(true);
-    try {
-      const res = await fetch("/api/admin/pages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          key: newKey.toLowerCase(),
-          content: {
-            en: page.content.en,
-            bn: page.content.bn
-          }
-        })
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to duplicate page");
-      }
-
-      setSuccess(`Page duplicated successfully as "${newKey.toLowerCase()}"!`);
-      fetchPages();
-      setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err.message);
-      setTimeout(() => setError(""), 4000);
-    } finally {
-      setSaving(false);
-    }
+  const handleDuplicate = (page: PageItem) => {
+    setDuplicateTarget(page);
+    setNewSlug("");
   };
 
-  const handleDelete = async (page: PageItem) => {
-    if (!confirm(`Are you sure you want to delete the duplicated landing page "${page.key}"?`)) return;
-
-    setSaving(true);
-    try {
-      const res = await fetch(`/api/admin/pages/${page.key}`, {
-        method: "DELETE"
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to delete page");
-      }
-
-      setSuccess(`Page "${page.key}" deleted successfully!`);
-      fetchPages();
-      setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err.message);
-      setTimeout(() => setError(""), 4000);
-    } finally {
-      setSaving(false);
-    }
+  const handleDelete = (page: PageItem) => {
+    setDeleteTarget(page);
   };
 
   // Form Fields for About page (structured JSON)
@@ -2932,6 +2873,135 @@ export default function AdminPagesPage() {
           ))}
         </div>
       )}
+
+      {/* Duplicate Dialog */}
+      <Dialog open={!!duplicateTarget} onOpenChange={(open) => { if (!open) setDuplicateTarget(null); }}>
+        <DialogContent className="sm:max-w-[425px] rounded-3xl p-6 border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xl">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold">Duplicate Landing Page</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-semibold text-slate-500">New URL Slug / Key</label>
+              <Input
+                value={newSlug}
+                onChange={(e) => setNewSlug(e.target.value)}
+                placeholder="e.g. ezy-checkout-offer"
+                className="w-full text-sm"
+              />
+              <p className="text-[10px] text-slate-400 leading-relaxed">
+                Only alphanumeric characters, hyphens, and underscores are allowed.
+              </p>
+            </div>
+          </div>
+          <DialogFooter className="flex gap-2 sm:justify-end">
+            <Button variant="ghost" onClick={() => setDuplicateTarget(null)} className="cursor-pointer font-bold text-xs bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100">
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!duplicateTarget) return;
+                const newKey = newSlug.trim();
+                if (!newKey) return;
+
+                const keyRegex = /^[a-z0-9-_]+$/i;
+                if (!keyRegex.test(newKey)) {
+                  alert("Invalid key format. Only alphanumeric characters, hyphens, and underscores are allowed.");
+                  return;
+                }
+
+                const CORE_PAGES = ["ezy_checkout", "about", "terms", "privacy", "contact_info", "bkash_settings", "smtp_settings", "home_solutions", "home_at_glance", "offer_popup"];
+                if (CORE_PAGES.includes(newKey.toLowerCase())) {
+                  alert("This key is reserved for system pages. Please choose a different key.");
+                  return;
+                }
+
+                setSaving(true);
+                try {
+                  const res = await fetch("/api/admin/pages", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      key: newKey.toLowerCase(),
+                      content: {
+                        en: duplicateTarget.content.en,
+                        bn: duplicateTarget.content.bn
+                      }
+                    })
+                  });
+
+                  const data = await res.json();
+                  if (!res.ok) {
+                    throw new Error(data.error || "Failed to duplicate page");
+                  }
+
+                  setSuccess(`Page duplicated successfully as "${newKey.toLowerCase()}"!`);
+                  setDuplicateTarget(null);
+                  setNewSlug("");
+                  fetchPages();
+                  setTimeout(() => setSuccess(""), 3000);
+                } catch (err: any) {
+                  setError(err.message);
+                  setTimeout(() => setError(""), 4000);
+                } finally {
+                  setSaving(false);
+                }
+              }}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs cursor-pointer"
+            >
+              Duplicate
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete Dialog */}
+      <Dialog open={!!deleteTarget} onOpenChange={(open) => { if (!open) setDeleteTarget(null); }}>
+        <DialogContent className="sm:max-w-[425px] rounded-3xl p-6 border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-xl">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-red-600">Confirm Deletion</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+              Are you sure you want to delete the duplicated landing page <strong className="text-red-600">"${deleteTarget?.key}"</strong>? This action cannot be undone.
+            </p>
+          </div>
+          <DialogFooter className="flex gap-2 sm:justify-end">
+            <Button variant="ghost" onClick={() => setDeleteTarget(null)} className="cursor-pointer font-bold text-xs bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100">
+              Cancel
+            </Button>
+            <Button
+              onClick={async () => {
+                if (!deleteTarget) return;
+                setSaving(true);
+                try {
+                  const res = await fetch(`/api/admin/pages/${deleteTarget.key}`, {
+                    method: "DELETE"
+                  });
+
+                  const data = await res.json();
+                  if (!res.ok) {
+                    throw new Error(data.error || "Failed to delete page");
+                  }
+
+                  setSuccess(`Page "${deleteTarget.key}" deleted successfully!`);
+                  setDeleteTarget(null);
+                  fetchPages();
+                  setTimeout(() => setSuccess(""), 3000);
+                } catch (err: any) {
+                  setError(err.message);
+                  setTimeout(() => setError(""), 4000);
+                } finally {
+                  setSaving(false);
+                }
+              }}
+              className="bg-red-600 hover:bg-red-700 text-white font-bold text-xs cursor-pointer"
+            >
+              Delete Page
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
